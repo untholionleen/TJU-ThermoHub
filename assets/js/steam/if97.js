@@ -149,23 +149,23 @@ function solve(mode,a,b){
 function saturationCurves(count=32){
  const liquid=[],vapor=[];
  for(let i=0;i<count;i++){
-  const T=273.16+(Tc-273.16-0.02)*i/(count-1);
+  const q=i/(count-1),T=273.16+(Tc-273.16-0.02)*(1-Math.pow(1-q,2.2));
   const s=saturationAtT(T);
   liquid.push(s);vapor.push(s);
  }
  return {liquid,vapor};
 }
 function phChart(){
- const sat=saturationCurves(34),liquid=sat.liquid.map(s=>[s.hf,Math.log10(s.P)]),vapor=sat.vapor.map(s=>[s.hg,Math.log10(s.P)]);
+ const sat=saturationCurves(56),liquid=sat.liquid.map(s=>[s.hf,Math.log10(s.P)]),vapor=sat.vapor.map(s=>[s.hg,Math.log10(s.P)]);
  const quality={};
  for(const x of [.1,.25,.5,.75,.9])quality[x]=sat.liquid.map((s,i)=>[s.hf+x*(s.hg-s.hf),Math.log10(s.P)]);
  const isobars=[];
  const Ps=[.01,.05,.1,.5,1,2,5,10,15,20,25,30,50,80,100];
  for(const P of Ps){
   const points=[];
-  const minT=273.15,maxT=Math.min(P<=50?2273.15:1073.15,1400);
-  for(let i=0;i<72;i++){
-   const T=minT+(maxT-minT)*i/71;
+  const minT=273.15,maxT=(P<=50?2273.15:1073.15);
+  for(let i=0;i<90;i++){
+   const T=minT+(maxT-minT)*i/89;
    const region=classify(P,T);
    if(region===4)continue;
    try{const st=statePT(P,T);points.push([st.h,Math.log10(P)]);}catch(e){points.push([NaN,Math.log10(P)]);}
@@ -184,7 +184,7 @@ function tsChart(){
   const points=[];
   const maxT=P<=50?2273.15:1073.15;
   for(let i=0;i<72;i++){
-   const T=273.15+(maxT-273.15)*i/71;
+   const T=273.15+(maxT-273.15)*i/89;
    if(classify(P,T)===4)continue;
    try{const st=statePT(P,T);points.push([st.s,st.t]);}catch(e){points.push([NaN,NaN]);}
   }
