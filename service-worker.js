@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tju-thermohub-v13.1.1-if97';
+const CACHE_NAME = 'tju-thermohub-v13.2.0-if97';
 const CORE_ASSETS = [
   './', './index.html', './manifest.webmanifest',
   './assets/css/theme.css',
