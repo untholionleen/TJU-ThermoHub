@@ -184,7 +184,7 @@ function tsChart(){
   const points=[];
   const maxT=P<=50?2273.15:1073.15;
   for(let i=0;i<72;i++){
-   const T=273.15+(maxT-273.15)*i/89;
+   const T=273.15+(maxT-273.15)*i/71;
    if(classify(P,T)===4)continue;
    try{const st=statePT(P,T);points.push([st.s,st.t]);}catch(e){points.push([NaN,NaN]);}
   }
