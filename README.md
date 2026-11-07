@@ -1,32 +1,21 @@
 # TJU-ThermoHub
 
-天津大学化工热力学学生自主学习网站。
+天津大学化工热力学学生自主学习网站（独立重构开发基线）。
 
-This repository contains the independently rebuilt Nv3.1.0 project baseline (application version 13.1.0). The previous `JsPSCES-TJU` repository is kept separate and unchanged.
+## Repository layout
+- `source/runtime/part-*.b64`: transport shards of the XZ-compressed runtime source archive. The workflow restores them before testing/building.
+- `.github/workflows/pages.yml`: CI gates and Pages deployment.
+- `README.md`: project entry and current deployment notes.
 
-## Status
+The complete downloadable delivery bundle includes design/deployment documents and legacy reference files. This repository stores the deployable runtime source and CI transport bundle.
 
-This is a working development baseline, not a claim that every planned module is complete. Only implemented and validated calculations are exposed as working tools; unsupported data ranges and unverified correlations must remain clearly marked.
+## Build and test
+After restoring the source archive, run:
+- `npm run check`
+- `npm run build:standalone`
 
-## Modules
+## Deployment
+Pushes to `main` run syntax and numerical tests, build the standalone artifact, assemble a static Pages directory, and deploy it.
 
-1. Interactive thermodynamic models and visualizations.
-2. Equation-of-state and calculation tools.
-3. Engineering charts and digitized reference data.
-4. Water and steam properties, with IF97 regions implemented incrementally and validation required for each region.
-5. Appendices: symbols and Chinese-English terminology.
-
-## Live deployment constraints
-
-- Static GitHub Pages site; no backend runtime in this phase.
-- Supabase is reserved for a future phase and is disabled in the live site.
-- No accounts, email OTP, login, or cloud-data runtime.
-
-## Development
-
-```bash
-npm run check
-npm run build:standalone
-```
-
-See `docs/` for the design, deployment, data dictionary, test report, and known limitations.
+## Current scope
+Static GitHub Pages; Supabase is intentionally disabled. No user accounts, email OTP, login, server runtime, or cloud database is active in this phase. This is a development baseline: features marked experimental/disabled in the project documentation must not be treated as validated engineering services.
