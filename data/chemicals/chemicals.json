@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "units": {"Tc": "K", "Pc": "MPa", "omega": "dimensionless"},
+  "source_policy": "Textbook values are used where the uploaded third-edition appendix lists the requested compound; remaining entries are provisional reference values and must be cross-checked against a named public record before engineering release.",
+  "chemicals": [
+    {"id":"nitrogen","zh":"氮气","en":"Nitrogen","Tc":126.2,"Pc":3.394,"omega":0.0372,"source":"Ver10.1.0 legacy data / public reference cross-check required","status":"pending-verification"},
+    {"id":"oxygen","zh":"氧气","en":"Oxygen","Tc":154.58,"Pc":5.043,"omega":0.0222,"source":"Ver10.1.0 legacy data / public reference cross-check required","status":"pending-verification"},
+    {"id":"hydrogen","zh":"氢气","en":"Hydrogen","Tc":33.145,"Pc":1.2964,"omega":-0.219,"source":"Ver10.1.0 legacy data / public reference cross-check required","status":"pending-verification"},
+    {"id":"carbon-dioxide","zh":"二氧化碳","en":"Carbon dioxide","Tc":304.1282,"Pc":7.3773,"omega":0.2239,"source":"Ver10.1.0 legacy data / public reference cross-check required","status":"pending-verification"},
+    {"id":"methane","zh":"甲烷","en":"Methane","Tc":190.56,"Pc":4.599,"omega":0.011,"Zc":0.286,"source":"《化工热力学》第三版，附录3，表列物性","status":"textbook-listed"},
+    {"id":"ethane","zh":"乙烷","en":"Ethane","Tc":305.32,"Pc":4.872,"omega":0.099,"Zc":0.279,"source":"《化工热力学》第三版，附录3，表列物性","status":"textbook-listed"},
+    {"id":"propane","zh":"丙烷","en":"Propane","Tc":369.83,"Pc":4.248,"omega":0.152,"Zc":0.277,"source":"《化工热力学》第三版，附录3，表列物性","status":"textbook-listed"},
+    {"id":"n-butane","zh":"正丁烷","en":"n-Butane","Tc":425.12,"Pc":3.796,"omega":0.199,"Zc":0.274,"source":"《化工热力学》第三版，附录3，表列丁烷；按正丁烷对应使用","status":"textbook-listed"},
+    {"id":"n-pentane","zh":"正戊烷","en":"n-Pentane","Tc":469.7,"Pc":3.370,"omega":0.249,"Zc":0.268,"source":"《化工热力学》第三版，附录3，表列戊烷；按正戊烷对应使用","status":"textbook-listed"},
+    {"id":"n-hexane","zh":"正己烷","en":"n-Hexane","Tc":507.6,"Pc":3.025,"omega":0.305,"Zc":0.264,"source":"《化工热力学》第三版，附录3，表列己烷；按正己烷对应使用","status":"textbook-listed"},
+    {"id":"ethylene","zh":"乙烯","en":"Ethylene","Tc":282.34,"Pc":5.041,"omega":0.085,"Zc":0.2815,"source":"《化工热力学》第三版，附录3，表列物性","status":"textbook-listed"},
+    {"id":"propylene","zh":"丙烯","en":"Propylene","Tc":364.9,"Pc":4.60,"omega":0.142,"Zc":0.2798,"source":"《化工热力学》第三版，附录3，表列物性","status":"textbook-listed"},
+    {"id":"acetylene","zh":"乙炔","en":"Acetylene","Tc":308.3,"Pc":6.138,"omega":0.187,"Zc":0.2687,"source":"《化工热力学》第三版，附录3，表列物性","status":"textbook-listed"},
+    {"id":"benzene","zh":"苯","en":"Benzene","Tc":562.05,"Pc":4.895,"omega":0.211,"Zc":0.268,"source":"《化工热力学》第三版，附录3，表列物性","status":"textbook-listed"},
+    {"id":"toluene","zh":"甲苯","en":"Toluene","Tc":591.75,"Pc":4.108,"omega":0.264,"Zc":0.264,"source":"《化工热力学》第三版，附录3，表列物性","status":"textbook-listed"},
+    {"id":"water","zh":"水","en":"Water","Tc":647.096,"Pc":22.064,"omega":0.344,"Zc":0.229,"source":"临界常数参考 IAPWS；教材第三版附录3未列在当前核对页段中","status":"pending-source-crosscheck"}
+  ]
+}

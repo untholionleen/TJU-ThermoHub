@@ -1,0 +1,11 @@
+{
+  "name": "天津大学化工热力学学生自主学习网站",
+  "short_name": "TJU-ThermoHub",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f7fa",
+  "theme_color": "#133963",
+  "description": "化工热力学自主学习与工程辅助查询平台"
+}

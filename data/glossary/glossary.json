@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0.0",
+  "terms": [
+    {"zh":"压缩因子","en":"Compressibility factor","symbol":"Z","unit":"1"},
+    {"zh":"状态方程","en":"Equation of state","symbol":"EOS","unit":"—"},
+    {"zh":"逸度","en":"Fugacity","symbol":"f","unit":"Pa"},
+    {"zh":"逸度系数","en":"Fugacity coefficient","symbol":"φ","unit":"1"},
+    {"zh":"偏心因子","en":"Acentric factor","symbol":"ω","unit":"1"},
+    {"zh":"剩余焓","en":"Enthalpy departure","symbol":"Hᴿ","unit":"J/mol"},
+    {"zh":"剩余熵","en":"Entropy departure","symbol":"Sᴿ","unit":"J/(mol·K)"},
+    {"zh":"临界温度","en":"Critical temperature","symbol":"Tc","unit":"K"},
+    {"zh":"临界压力","en":"Critical pressure","symbol":"Pc","unit":"Pa"},
+    {"zh":"泡点","en":"Bubble point","symbol":"—","unit":"—"},
+    {"zh":"露点","en":"Dew point","symbol":"—","unit":"—"},
+    {"zh":"闪蒸","en":"Flash calculation","symbol":"—","unit":"—"},
+    {"zh":"汽液平衡","en":"Vapor-liquid equilibrium","symbol":"VLE","unit":"—"},
+    {"zh":"干度","en":"Vapor quality","symbol":"x","unit":"1"},
+    {"zh":"饱和液体","en":"Saturated liquid","symbol":"f","unit":"—"},
+    {"zh":"饱和蒸汽","en":"Saturated vapor","symbol":"g","unit":"—"},
+    {"zh":"过热蒸汽","en":"Superheated steam","symbol":"—","unit":"—"},
+    {"zh":"压缩液体","en":"Compressed liquid","symbol":"—","unit":"—"},
+    {"zh":"普遍化关联","en":"Generalized correlation","symbol":"—","unit":"—"},
+    {"zh":"双线性插值","en":"Bilinear interpolation","symbol":"—","unit":"—"}
+  ]
+}

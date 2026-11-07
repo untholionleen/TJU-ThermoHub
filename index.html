@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#133963">
+<meta name="description" content="天津大学化工热力学学生自主学习网站：状态方程、工程图表、公式推导、水和水蒸气性质及学术附录。">
+<title>天津大学化工热力学学生自主学习网站 | TJU-ThermoHub 13.1.0</title>
+<link rel="stylesheet" href="assets/css/theme.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="brand-wrap">
+    <div class="seal" aria-hidden="true">北洋</div>
+    <div class="brand"><div class="brand-title">天津大学化工热力学学生自主学习网站 <span class="version">13.1.0 · Nv3.1.0</span></div><div class="brand-sub">TJU Chemical Engineering Thermodynamics Self-Learning Platform</div></div>
+    <button id="languageButton" class="language-button" type="button">English</button>
+  </div>
+  <nav class="main-nav" aria-label="主导航">
+    <button class="nav-btn active" data-page="home" data-i18n="nav.home">首页</button>
+    <button class="nav-btn" data-page="module1" data-i18n="nav.m1">一、状态方程与模型</button>
+    <button class="nav-btn" data-page="module2" data-i18n="nav.m2">二、工程图表与关联</button>
+    <button class="nav-btn" data-page="module3" data-i18n="nav.m3">三、公式推导专题</button>
+    <button class="nav-btn" data-page="module4" data-i18n="nav.m4">四、水与水蒸气</button>
+    <button class="nav-btn" data-page="appendix" data-i18n="nav.app">五、附录</button>
+  </nav>
+</header>
+<main class="container">
+  <section class="page active" id="page-home">
+    <div class="hero">
+      <div class="hero-kicker" data-i18n="home.kicker">TJU · 化工学院 · 热力学数字学习环境</div>
+      <h1 data-i18n="home.title">从经典热力学到工程数字化应用</h1>
+      <p data-i18n="home.desc">以数学模型为核心，将状态方程、工程关联、公式推导和水蒸气性质整合为统一的自主学习与工程辅助查询平台。</p>
+      <div class="hero-actions"><button class="primary" data-go="module1" data-i18n="home.start">进入学习平台</button><a class="quiet-link" href="https://untholionleen.github.io/JsPSCES-TJU/" target="_blank" rel="noopener" data-i18n="home.old">查看既有 JsPSCES-TJU 在线站</a></div>
+    </div>
+    <div class="notice-strip"><strong data-i18n="home.noticeTitle">版本说明</strong><span data-i18n="home.notice">本交付包是 13.1.0 工程基线版。已实现功能可直接使用；尚未完成标准公式移植或数据核验的内容会明确标记，不提供伪造数值。</span></div>
+    <div class="module-grid">
+      <article class="module-card"><span class="module-no">01</span><h2 data-i18n="home.m1title">状态方程与热力学模型</h2><p data-i18n="home.m1desc">纯物质立方型 EOS、模型比较、P-V-T 交互曲面与相平衡建设入口。</p><button class="text-button" data-go="module1" data-i18n="common.enter">进入模块 →</button></article>
+      <article class="module-card"><span class="module-no">02</span><h2 data-i18n="home.m2title">工程图表与普遍化关联</h2><p data-i18n="home.m2desc">模型生成的压缩因子曲线、查询点、公式与数据导出。</p><button class="text-button" data-go="module2" data-i18n="common.enter">进入模块 →</button></article>
+      <article class="module-card"><span class="module-no">03</span><h2 data-i18n="home.m3title">热力学公式推导专题</h2><p data-i18n="home.m3desc">逐步学习推导逻辑，并连接对应计算工具。</p><button class="text-button" data-go="module3" data-i18n="common.enter">进入模块 →</button></article>
+      <article class="module-card"><span class="module-no">04</span><h2 data-i18n="home.m4title">水与水蒸气性质</h2><p data-i18n="home.m4desc">IF97 饱和压力、状态区间及插值教学入口；完整五区物性引擎需后续验收。</p><button class="text-button" data-go="module4" data-i18n="common.enter">进入模块 →</button></article>
+      <article class="module-card module-card-wide"><span class="module-no">05</span><h2 data-i18n="home.apptitle">附录与学术参考</h2><p data-i18n="home.appdesc">主要符号、术语、单位换算、物性数据来源与版权说明。</p><button class="text-button" data-go="appendix" data-i18n="common.enter">进入模块 →</button></article>
+    </div>
+    <div class="learning-path"><h2 data-i18n="home.pathTitle">建议学习路径</h2><div class="path-flow"><span data-i18n="home.path1">经典模型</span><b>→</b><span data-i18n="home.path2">工程关联</span><b>→</b><span data-i18n="home.path3">推导理解</span><b>→</b><span data-i18n="home.path4">物性查询</span><b>→</b><span data-i18n="home.path5">工程应用</span></div></div>
+  </section>
+
+  <section class="page" id="page-module1">
+    <div class="page-heading"><div><div class="eyebrow">MODULE 01</div><h1 data-i18n="m1.title">状态方程与热力学模型</h1><p data-i18n="m1.desc">保留既有 JsPSCES-TJU 的学习目标，并以可追溯计算替代模拟输出。</p></div><span class="status status-active" data-i18n="status.partial">部分功能已实现</span></div>
+    <div class="subnav"><button class="subnav-btn active" data-sub="eos" data-i18n="m1.sub.eos">纯物质 EOS</button><button class="subnav-btn" data-sub="pvt" data-i18n="m1.sub.pvt">P-V-T 曲面</button><button class="subnav-btn" data-sub="vle" data-i18n="m1.sub.vle">混合物与 VLE</button></div>
+    <div class="subpage active" id="sub-eos">
+      <div class="two-col">
+        <div class="panel">
+          <h2 data-i18n="eos.inputTitle">纯物质参数</h2>
+          <label data-i18n="eos.species">物质</label><select id="species"></select>
+          <div class="form-grid three"><div><label>Tc / K</label><input id="tc" type="number" step="any" value="190.56"></div><div><label>Pc / MPa</label><input id="pc" type="number" step="any" value="4.599"></div><div><label>ω</label><input id="omega" type="number" step="any" value="0.011"></div></div>
+          <label data-i18n="eos.model">状态方程</label><select id="eos"><option value="pr">Peng–Robinson (PR)</option><option value="srk">Soave–Redlich–Kwong (SRK)</option><option value="rk">Redlich–Kwong (RK)</option><option value="vdw">van der Waals (vdW)</option><option value="prg" disabled>PRG（定义待核实，暂不可计算）</option></select>
+          <div class="form-grid two"><div><label>T / K</label><input id="temperature" type="number" step="any" value="250"></div><div><label>P / MPa</label><input id="pressure" type="number" step="any" value="2.0"></div></div>
+          <div class="button-row"><button class="primary" id="calculateEos" data-i18n="common.calculate">计算</button><button class="secondary" id="resetEos" data-i18n="common.reset">重置</button><button class="secondary" id="exportEos" data-i18n="common.exportCsv">导出 CSV</button></div>
+          <p class="field-note" id="chemical-source-note" data-i18n="eos.sourceNote">临界参数优先采用上传教材附录中可核对的数据；少数教材表未列出的物质使用已注明来源的暂存值，需复核。</p>
+        </div>
+        <div class="panel result-panel"><h2 data-i18n="eos.resultTitle">计算结果</h2><div id="eosMessage" class="result-message" data-i18n="eos.wait">输入参数后执行计算。</div><div id="eosResults" class="result-table-wrap"></div><div class="formula-box"><h3 data-i18n="common.modelEquation">所用模型</h3><div class="math-display"><math display="block"><mi>P</mi><mo>=</mo><mfrac><mrow><mi>R</mi><mi>T</mi></mrow><mrow><mi>V</mi><mo>−</mo><mi>b</mi></mrow></mfrac><mo>−</mo><mfrac><mrow><mi>a</mi><mi>α</mi></mrow><mrow><msup><mi>V</mi><mn>2</mn></msup><mo>+</mo><mi>u</mi><mi>b</mi><mi>V</mi><mo>+</mo><mi>w</mi><msup><mi>b</mi><mn>2</mn></msup></mrow></mfrac></math></div><small data-i18n="eos.eqNote">PR、SRK、RK 与 vdW 使用各自的参数定义；此页暂不把 PRG 当作独立模型。</small></div></div>
+      </div>
+      <div class="panel chart-panel"><div class="panel-head"><div><h2 data-i18n="eos.chartTitle">P-V 等温线（模型计算）</h2><p data-i18n="eos.chartDesc">曲线根据所选 EOS 与当前温度生成，不是扫描图。</p></div><button class="secondary" id="downloadEosCurve" data-i18n="common.exportData">导出曲线数据</button></div><canvas id="eosChart" class="chart-canvas" height="340"></canvas></div>
+      <div class="panel"><div class="panel-head"><h2 data-i18n="eos.historyTitle">本地计算记录</h2><div class="button-row"><button class="secondary" id="exportHistory" data-i18n="eos.exportHistory">导出全部记录 JSON</button><button class="secondary" id="clearHistory" data-i18n="eos.clearHistory">清空记录</button></div></div><div id="historyList" class="result-message" data-i18n="eos.emptyHistory">尚无计算记录。</div></div>
+      <div class="panel"><h2 data-i18n="eos.knownIssues">本模块使用边界</h2><ul class="note-list"><li data-i18n="eos.issue1">PRG 在现有资料中没有足够明确、可独立复现的定义，因此不启用。</li><li data-i18n="eos.issue2">多实根区同时列出液相候选根与气相候选根；稳定相选择需要通过逸度和相平衡进一步判断。</li><li data-i18n="eos.issue3">该计算器输出立方型 EOS 模型结果，不等同于 NIST/REFPROP 高精度物性结果。</li></ul></div>
+    </div>
+    <div class="subpage" id="sub-pvt">
+      <div class="panel"><div class="panel-head"><div><h2 data-i18n="pvt.title">纯物质 P-V-T 可交互曲面</h2><p data-i18n="pvt.desc">以 van der Waals / PR 模型生成可旋转线框曲面；选择二维投影查看关系。</p></div><span class="status status-active" data-i18n="status.model">模型生成</span></div>
+        <div class="form-grid four"><div><label data-i18n="pvt.model">模型</label><select id="pvtModel"><option value="vdw">van der Waals</option><option value="pr">Peng–Robinson</option></select></div><div><label>Tc / K</label><input id="pvtTc" type="number" value="647.096"></div><div><label>Pc / MPa</label><input id="pvtPc" type="number" value="22.064"></div><div><label>ω</label><input id="pvtOmega" type="number" value="0.344"></div></div>
+        <div class="button-row"><button class="secondary projection active" data-proj="3d">3D</button><button class="secondary projection" data-proj="pv">P-V</button><button class="secondary projection" data-proj="pt">P-T</button><button class="secondary projection" data-proj="vt">V-T</button><button class="primary" id="drawPvt" data-i18n="common.redraw">重新绘图</button></div>
+        <canvas id="pvtCanvas" class="chart-canvas tall" height="520"></canvas><p class="field-note" data-i18n="pvt.note">3D 视图为 EOS 原始状态曲面示意。亚临界不稳定环不代表稳定汽液平衡；本页尚未实现 Maxwell 等面积/等逸度包络线。</p>
+      </div>
+    </div>
+    <div class="subpage" id="sub-vle">
+      <div class="panel"><span class="status status-pending" data-i18n="status.pending">待完成与验证</span><h2 data-i18n="vle.title">二元混合物与汽液相平衡</h2><p data-i18n="vle.desc">本交付版暂不提供泡点、露点或闪蒸的数值输出。已审计发现 Ver10.1.0 与 testing_5 中混合物计算函数使用随机压力或固定模拟结果，不能作为真实 VLE 计算使用。</p><div class="notice-box"><strong data-i18n="vle.why">为什么暂时关闭？</strong><p data-i18n="vle.whyDesc">防止用户把随机数/演示值误认为真实相平衡结果。正式开放前需实现并验证 φ-φ 闪蒸、组分逸度相等、物料衡算和收敛判据，并与可靠参考数据交叉核验。</p></div><a class="quiet-link" href="legacy/Ver10.1.0-original.html" target="_blank" data-i18n="vle.legacy">查看原始 Ver10.1.0 页面（仅供审计，不建议使用其混合物计算）</a></div>
+    </div>
+  </section>
+
+  <section class="page" id="page-module2">
+    <div class="page-heading"><div><div class="eyebrow">MODULE 02</div><h1 data-i18n="m2.title">工程图表与普遍化关联</h1><p data-i18n="m2.desc">先提供可追溯的 EOS 生成曲线，再逐项接入教材 Lee–Kesler 等标准关联。</p></div><span class="status status-partial" data-i18n="status.model">模型生成</span></div>
+    <div class="panel"><h2 data-i18n="m2.zTitle">压缩因子曲线查询（PR 模型）</h2><p class="field-note" data-i18n="m2.zNote">注意：当前曲线是所选真实组分的 PR EOS 结果，不是教材 Lee–Kesler 普遍化图。Lee–Kesler 双流体常数/完整关联仍待独立实现与验证。</p>
+      <div class="form-grid four"><div><label>Tc / K</label><input id="chartTc" type="number" value="190.56"></div><div><label>Pc / MPa</label><input id="chartPc" type="number" value="4.599"></div><div><label>ω</label><input id="chartOmega" type="number" value="0.011"></div><div><label data-i18n="m2.tr">约化温度 Tr</label><input id="chartTr" type="number" min="0.3" max="3" step="0.05" value="1.5"></div></div>
+      <div class="form-grid two"><div><label data-i18n="m2.pr">查询约化压力 Pr</label><input id="chartPr" type="number" min="0.001" max="10" step="any" value="1"></div><div class="button-row align-end"><button class="primary" id="calcZ" data-i18n="common.calculate">计算</button><button class="secondary" id="exportZ" data-i18n="common.exportCsv">导出 CSV</button></div></div>
+      <div id="zResult" class="result-message" data-i18n="m2.wait">计算后显示 Z 与状态。</div><canvas id="zChart" class="chart-canvas" height="380"></canvas>
+    </div>
+    <div class="panel"><h2 data-i18n="m2.backlogTitle">工程图表接入清单</h2><div class="table-wrap"><table><thead><tr><th data-i18n="table.chart">图表</th><th data-i18n="table.method">正式实现方法</th><th data-i18n="table.status">当前状态</th></tr></thead><tbody id="chartBacklog"></tbody></table></div></div>
+  </section>
+
+  <section class="page" id="page-module3">
+    <div class="page-heading"><div><div class="eyebrow">MODULE 03</div><h1 data-i18n="m3.title">热力学公式推导专题</h1><p data-i18n="m3.desc">将公式拆成可操作的步骤，每一步展示数学关系及物理含义。</p></div><span class="status status-active" data-i18n="status.active">已实现基础引擎</span></div>
+    <div class="two-col"><div class="panel"><h2 data-i18n="m3.listTitle">推导专题</h2><div id="derivationList" class="derivation-list"></div></div><div class="panel"><div class="panel-head"><h2 id="derivationTitle">van der Waals 临界参数</h2><span id="derivationProgress" class="mini-tag">1 / 5</span></div><div id="derivationEquation" class="math-display large-math"></div><p id="derivationNote" class="derivation-note"></p><div class="progress-track"><span id="derivationBar"></span></div><div class="button-row"><button class="secondary" id="prevStep" data-i18n="common.previous">上一步</button><button class="primary" id="nextStep" data-i18n="common.next">下一步</button><button class="secondary" id="autoStep" data-i18n="m3.auto">自动播放</button></div><a id="derivationJump" class="quiet-link" href="#" data-i18n="m3.jump">前往关联计算器 →</a></div></div>
+    <div class="panel"><h2 data-i18n="m3.auditTitle">教学审核说明</h2><p data-i18n="m3.auditDesc">首批 D1 已实现逐步推导框架。其他专题先以目录登记，正式内容需对照教材逐式校核后才能标记为已审核。不要把公式拆页等同于完成推导审校。</p></div>
+  </section>
+
+  <section class="page" id="page-module4">
+    <div class="page-heading"><div><div class="eyebrow">MODULE 04</div><h1 data-i18n="m4.title">水与水蒸气性质查询</h1><p data-i18n="m4.desc">本版实现 IF97 Region 4 饱和压力关系与教学插值器；IF97 完整五区性质函数未全部移植，暂不输出 h、s、u 等物性。</p></div><span class="status status-partial" data-i18n="status.partial">部分功能已实现</span></div>
+    <div class="subnav"><button class="subnav-btn active" data-sub="saturation" data-i18n="m4.sub.sat">饱和压力/温度</button><button class="subnav-btn" data-sub="interpolation" data-i18n="m4.sub.interp">插值教学</button><button class="subnav-btn" data-sub="steamroadmap" data-i18n="m4.sub.road">五区实现状态</button></div>
+    <div class="subpage active" id="sub-saturation"><div class="two-col"><div class="panel"><h2 data-i18n="m4.satTitle">IF97 饱和曲线（Region 4）</h2><label data-i18n="m4.inputMode">查询方式</label><select id="satMode"><option value="T" data-i18n="m4.byT">按温度 T 查询饱和压力</option><option value="P" data-i18n="m4.byP">按压力 P 查询饱和温度</option></select><div class="form-grid two"><div><label id="satInputLabel">T / K</label><input id="satInput" type="number" step="any" value="373.15"></div><div class="button-row align-end"><button class="primary" id="calcSat" data-i18n="common.calculate">计算</button></div></div><div id="satResult" class="result-message" data-i18n="m4.satHelp">有效温度范围：273.15–647.096 K；有效压力范围对应三相点至临界点。</div></div><div class="panel"><h2 data-i18n="m4.boundTitle">有效范围与物理限制</h2><ul class="note-list"><li>273.15 K ≤ T ≤ 647.096 K</li><li>0.000611657 MPa（约）≤ Ps ≤ 22.064 MPa</li><li data-i18n="m4.boundNote">仅计算饱和曲线，不代表已具备 Region 1/2/3/5 全部性质计算。</li></ul><a class="quiet-link" href="https://iapws.org/technical-guidance/release/IF97-Rev" target="_blank" rel="noopener" data-i18n="m4.iapws">IAPWS-IF97 官方发布文件 →</a></div></div><div class="panel"><h2 data-i18n="m4.satCurveTitle">饱和压力曲线</h2><canvas id="satChart" class="chart-canvas" height="360"></canvas></div></div>
+    <div class="subpage" id="sub-interpolation"><div class="two-col"><div class="panel"><h2 data-i18n="interp.title">双线性插值计算器</h2><p class="field-note" data-i18n="interp.desc">输入四个网格节点和目标坐标，计算双线性插值结果；本计算器只计算用户输入的表格数据，不代表 IF97 物性查询。</p><div class="form-grid four"><div><label>x0</label><input id="ix0" type="number" value="1"></div><div><label>x1</label><input id="ix1" type="number" value="2"></div><div><label>y0</label><input id="iy0" type="number" value="300"></div><div><label>y1</label><input id="iy1" type="number" value="400"></div><div><label>f00</label><input id="if00" type="number" value="10"></div><div><label>f10</label><input id="if10" type="number" value="20"></div><div><label>f01</label><input id="if01" type="number" value="15"></div><div><label>f11</label><input id="if11" type="number" value="27"></div><div><label>x</label><input id="ix" type="number" value="1.4"></div><div><label>y</label><input id="iy" type="number" value="350"></div></div><button class="primary" id="calcInterp" data-i18n="common.calculate">计算</button></div><div class="panel"><h2 data-i18n="interp.resultTitle">插值结果与过程</h2><div id="interpResult" class="result-message">f(x,y) = —</div><div class="math-display">t = (x − x₀)/(x₁ − x₀), u = (y − y₀)/(y₁ − y₀)</div><div class="math-display">f = (1−t)(1−u)f₀₀ + t(1−u)f₁₀ + (1−t)u f₀₁ + tu f₁₁</div></div></div></div>
+    <div class="subpage" id="sub-steamroadmap"><div class="panel"><h2 data-i18n="m4.roadTitle">IF97 五区域实施状态</h2><div class="table-wrap"><table><thead><tr><th>Region</th><th data-i18n="table.area">区域</th><th data-i18n="table.status">状态</th><th data-i18n="table.next">下一步</th></tr></thead><tbody><tr><td>1</td><td data-i18n="steam.r1">压缩液体</td><td><span class="status status-pending">待移植</span></td><td>Gibbs 基本方程与导数</td></tr><tr><td>2</td><td data-i18n="steam.r2">过热蒸汽</td><td><span class="status status-pending">待移植</span></td><td>理想项 + 残余项</td></tr><tr><td>3</td><td data-i18n="steam.r3">高密度/临界附近</td><td><span class="status status-pending">待移植</span></td><td>Helmholtz 方程及密度求解</td></tr><tr><td>4</td><td data-i18n="steam.r4">饱和曲线</td><td><span class="status status-active">已实现</span></td><td>验证边界与后向方程</td></tr><tr><td>5</td><td data-i18n="steam.r5">高温蒸汽</td><td><span class="status status-pending">待移植</span></td><td>高温区域方程</td></tr></tbody></table></div><p class="field-note" data-i18n="m4.roadNote">完整 IF97 不等于只实现饱和压力方程。未完成区域不提供虚假的 h、s、u、cp、cv 数值。</p></div></div>
+  </section>
+
+  <section class="page" id="page-appendix">
+    <div class="page-heading"><div><div class="eyebrow">APPENDICES</div><h1 data-i18n="app.title">附录与学术参考</h1><p data-i18n="app.desc">统一符号、术语和常数的入口。物性常数必须带来源与验证状态。</p></div><span class="status status-active" data-i18n="status.active">基础功能已实现</span></div>
+    <div class="two-col"><div class="panel"><h2 data-i18n="app.glossTitle">化工热力学词汇</h2><input id="glossSearch" type="search" data-i18n-placeholder="app.search" placeholder="搜索中文或英文术语"><div id="glossary" class="glossary-list"></div></div><div class="panel"><h2 data-i18n="app.unitTitle">常用单位换算</h2><label data-i18n="app.convertType">换算类型</label><select id="unitType"><option value="pressure" data-i18n="unit.pressure">压力：MPa / bar / kPa / atm</option><option value="energy" data-i18n="unit.energy">能量：J / kJ / cal</option><option value="temperature" data-i18n="unit.temperature">温度：K / °C</option></select><div class="form-grid two"><div><label data-i18n="app.value">数值</label><input id="unitValue" type="number" value="1"></div><div><label data-i18n="app.from">从</label><select id="unitFrom"></select></div><div><label data-i18n="app.to">到</label><select id="unitTo"></select></div></div><button class="primary" id="convertUnit" data-i18n="common.calculate">换算</button><div id="unitResult" class="result-message">—</div></div></div>
+    <div class="panel"><h2 data-i18n="app.symbolTitle">主要符号</h2><div class="table-wrap"><table><thead><tr><th>符号</th><th data-i18n="app.meaning">含义</th><th data-i18n="table.unit">SI 单位</th></tr></thead><tbody id="symbolTable"></tbody></table></div></div>
+    <div class="panel"><h2 data-i18n="app.sourceTitle">数据来源与引用</h2><ul class="source-list"><li><a href="https://iapws.org/technical-guidance/release/IF97-Rev" target="_blank" rel="noopener">IAPWS R7-97(2012)：IF97 修订发布文件</a> — 水与水蒸气工业公式。</li><li><a href="https://webbook.nist.gov/chemistry/" target="_blank" rel="noopener">NIST Chemistry WebBook</a> — 物性数据核对入口。</li><li><a href="https://pjb10.user.srcf.net/thermo/" target="_blank" rel="noopener">Patrick J. Barrie 原始教学程序</a> — 原项目算法与教学结构参考，使用与再分发需遵守原权利要求。</li><li><span data-i18n="app.bookRef">夏淑倩、马沛生、李永红主编：《化工热力学》第三版，化学工业出版社，2023。已上传的附录用于核对基本常数与物性表，不整段复制受版权保护内容。</span></li></ul><p class="field-note" data-i18n="app.dataNote">临界参数表中可从教材附录3核对的物质采用教材值；氮、氧、氢、二氧化碳等以独立来源记录并待进一步复核。数据版本与来源见 data/chemicals/chemicals.json。</p></div>
+  </section>
+</main>
+<footer class="site-footer"><div class="footer-grid"><div><h3>TJU-ThermoHub</h3><p data-i18n="footer.intro">天津大学化工热力学学生自主学习网站</p><p>GitHub: <a href="https://github.com/Untholionleen" target="_blank" rel="noopener">Untholionleen</a></p></div><div><h3 data-i18n="footer.academic">学术与版权</h3><p data-i18n="footer.advisor">理论指导：天津大学化工学院夏淑倩教授</p><p data-i18n="footer.owner">项目发起与版权归属：Untholionleen</p><p data-i18n="footer.tech">技术实现：项目开发维护团队</p></div><div><h3 data-i18n="footer.references">原始参考与部署</h3><p><a href="https://pjb10.user.srcf.net/thermo/" target="_blank" rel="noopener">Patrick Barrie Thermodynamics Programs</a></p><p data-i18n="footer.env">使用环境：天津大学化工学院及高校教学场景</p><p>Version 13.1.0 (Nv3.1.0)</p></div></div><div class="footer-bottom" data-i18n="footer.disclaimer">本网站用于教学与工程辅助查询。计算结果须结合模型适用范围及数据来源独立核验，不作为重大工程决策的唯一依据。</div></footer>
+<script src="assets/js/eos/eos.js"></script><script src="assets/js/steam/region4.js"></script><script src="assets/js/charts/draw.js"></script><script src="assets/js/derive/derivations.js"></script><script src="assets/js/core/app.js"></script>
+</body></html>
