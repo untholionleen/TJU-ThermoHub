@@ -134,7 +134,7 @@ function drawPvt(canvas,model,Tc,Pc,w,projection,pressureFn){
  }
  let rotX=-.48,rotY=.72,zoom=1,drag=null;
  if(canvas._pvtRotation){rotX=canvas._pvtRotation.x;rotY=canvas._pvtRotation.y;zoom=canvas._pvtRotation.zoom;}
- const tCount=25,vCount=38,Ts=Array.from({length:tCount},(_,i)=>.62+i/(tCount-1)*1.55),Vs=Array.from({length:vCount},(_,i)=>.78+i/(vCount-1)*9.0);
+ const tCount=36,vCount=54,Ts=Array.from({length:tCount},(_,i)=>.62+i/(tCount-1)*1.55),Vs=Array.from({length:vCount},(_,i)=>.78+i/(vCount-1)*9.0);
  const mesh=Ts.map(tr=>Vs.map(vc=>{
   const T=tr*Tc,V=vc*8.31446261815324*Tc/(Pc*1e6);let p;
   try{p=pressureFn(model,T,V,Tc,Pc,w)/(Pc*1e6);}catch(e){p=NaN;}
