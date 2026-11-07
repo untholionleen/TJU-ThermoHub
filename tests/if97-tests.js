@@ -32,5 +32,6 @@ test('PH/PS do not fabricate Region 5 backward results',()=>{assert.throws(()=>a
 test('PT rejects on saturation line without quality',()=>{assert.throws(()=>api.PT(.1014179779,373.15),RangeError);});
 test('PH inverse recovers the R1 reference temperature',()=>{const s=api.PH(3,115.331273);near(s.t,300,0.02,'T from PH');});
 test('PS inverse recovers the R2 reference temperature',()=>{const s=api.PS(.0035,8.52238967);near(s.t,300,0.02,'T from PS');});
+test('T-s isobars reach their documented upper temperature limits',()=>{const chart=api.tsChart();const p50=chart.isobars.find(x=>x.P===50),p80=chart.isobars.find(x=>x.P===80);assert.ok(p50&&p80);near(p50.data.at(-1)[1],2273.15,1e-9,'50 MPa upper T');near(p80.data.at(-1)[1],1073.15,1e-9,'80 MPa upper T');});
 console.log('\n'+passed+' IF97 tests passed.');
 process.exitCode=passed===17?0:1;
