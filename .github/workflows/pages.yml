@@ -21,25 +21,25 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if [[ -f index.html && -f assets/js/core/app.js ]]; then
-            echo "Tracked source tree detected; archive restoration is not needed."
+          if [[ ! -f index.html || ! -f assets/js/core/app.js ]]; then
+          echo "Bootstrapping the tracked source tree from the transport archive."
+          cat source/runtime/part-*.b64 > /tmp/tju-runtime.tar.xz.b64
+          python - <<'PY'
+          import base64, io, lzma, tarfile
+          from pathlib import Path
+          root = Path.cwd().resolve()
+          encoded = Path('/tmp/tju-runtime.tar.xz.b64').read_text(encoding='ascii')
+          payload = base64.b64decode(encoded, validate=True)
+          raw = lzma.decompress(payload, format=lzma.FORMAT_XZ)
+          with tarfile.open(fileobj=io.BytesIO(raw), mode='r:') as archive:
+              for member in archive.getmembers():
+                  target = (root / member.name).resolve()
+                  if member.issym() or member.islnk() or (target != root and root not in target.parents):
+                      raise SystemExit(f'Unsafe archive member: {member.name}')
+              archive.extractall(root)
+          PY
           else
-            echo "Bootstrapping the tracked source tree from the transport archive."
-            cat source/runtime/part-*.b64 > /tmp/tju-runtime.tar.xz.b64
-            python - <<'PY'
-            import base64, io, lzma, tarfile
-            from pathlib import Path
-            root = Path.cwd().resolve()
-            encoded = Path('/tmp/tju-runtime.tar.xz.b64').read_text(encoding='ascii')
-            payload = base64.b64decode(encoded, validate=True)
-            raw = lzma.decompress(payload, format=lzma.FORMAT_XZ)
-            with tarfile.open(fileobj=io.BytesIO(raw), mode='r:') as archive:
-                for member in archive.getmembers():
-                    target = (root / member.name).resolve()
-                    if member.issym() or member.islnk() or (target != root and root not in target.parents):
-                        raise SystemExit(f'Unsafe archive member: {member.name}')
-                archive.extractall(root)
-            PY
+          echo "Tracked source tree detected; archive restoration is not needed."
           fi
       - uses: actions/setup-node@v7
         with:
@@ -111,13 +111,13 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -f -- README.md index.html assets data tests scripts legacy package.json service-worker.js manifest.webmanifest .nojekyll CHANGELOG.md
           if [[ -d source/runtime ]]; then
-            git rm -r -f source/runtime
+          git rm -r -f source/runtime
           fi
           if ! git diff --cached --quiet; then
-            git commit -m "chore: publish readable project source tree"
-            git push origin HEAD:main
+          git commit -m "chore: publish readable project source tree"
+          git push origin HEAD:main
           else
-            echo "Readable source tree is already up to date."
+          echo "Readable source tree is already up to date."
           fi
 
   build:
@@ -134,22 +134,22 @@ jobs:
         run: |
           set -euo pipefail
           if [[ -f index.html && -f assets/js/core/app.js ]]; then
-            echo "Using tracked project source tree."
+          echo "Using tracked project source tree."
           else
-            cat source/runtime/part-*.b64 > /tmp/tju-runtime.tar.xz.b64
-            python - <<'PY'
-            import base64, io, lzma, tarfile
-            from pathlib import Path
-            root = Path.cwd().resolve()
-            payload = base64.b64decode(Path('/tmp/tju-runtime.tar.xz.b64').read_text(encoding='ascii'), validate=True)
-            raw = lzma.decompress(payload, format=lzma.FORMAT_XZ)
-            with tarfile.open(fileobj=io.BytesIO(raw), mode='r:') as archive:
-                for member in archive.getmembers():
-                    target = (root / member.name).resolve()
-                    if member.issym() or member.islnk() or (target != root and root not in target.parents):
-                        raise SystemExit(f'Unsafe archive member: {member.name}')
-                archive.extractall(root)
-            PY
+          cat source/runtime/part-*.b64 > /tmp/tju-runtime.tar.xz.b64
+          python - <<'PY'
+          import base64, io, lzma, tarfile
+          from pathlib import Path
+          root = Path.cwd().resolve()
+          payload = base64.b64decode(Path('/tmp/tju-runtime.tar.xz.b64').read_text(encoding='ascii'), validate=True)
+          raw = lzma.decompress(payload, format=lzma.FORMAT_XZ)
+          with tarfile.open(fileobj=io.BytesIO(raw), mode='r:') as archive:
+              for member in archive.getmembers():
+                  target = (root / member.name).resolve()
+                  if member.issym() or member.islnk() or (target != root and root not in target.parents):
+                      raise SystemExit(f'Unsafe archive member: {member.name}')
+              archive.extractall(root)
+          PY
           fi
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
