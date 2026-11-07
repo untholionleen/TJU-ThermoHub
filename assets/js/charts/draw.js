@@ -29,30 +29,39 @@ function lineChart(canvas,series,xmin,xmax,ymin,ymax,xlabel,ylabel,title,options
  const dx=b.xmax-b.xmin||1,dy=b.ymax-b.ymin||1;
  const L=78,R=options.legend===false?28:36,legendRows=options.legend===false?0:Math.ceil(series.filter(v=>v.name).length/3),T=Math.max(48,34+legendRows*15),B=62,plotW=w-L-R,plotH=h-T-B;
  const X=x=>L+(x-b.xmin)/dx*plotW,Y=y=>T+(b.ymax-y)/dy*plotH;
- c.clearRect(0,0,w,h);c.fillStyle='#fff';c.fillRect(0,0,w,h);
- c.font='600 13px Inter,Segoe UI,sans-serif';c.fillStyle='#153b60';c.textAlign='center';c.fillText(title||'',L+plotW/2,23);
- c.font='11px Inter,Segoe UI,sans-serif';c.strokeStyle='#e7edf3';c.lineWidth=1;
- for(let i=0;i<=6;i++){
-  const y=T+plotH*i/6;c.beginPath();c.moveTo(L,y);c.lineTo(L+plotW,y);c.stroke();
-  c.fillStyle='#64778a';c.textAlign='right';c.fillText(nice(b.ymax-dy*i/6),L-10,y+4);
+ c.clearRect(0,0,w,h);
+ const bg=c.createLinearGradient(0,T,0,T+plotH);bg.addColorStop(0,'#ffffff');bg.addColorStop(1,'#f5f8fc');
+ c.fillStyle=bg;c.fillRect(L,T,plotW,plotH);
+ c.font='700 14px Inter,Segoe UI,sans-serif';c.fillStyle='#153b60';c.textAlign='center';c.fillText(title||'',L+plotW/2,23);
+ c.font='11px Inter,Segoe UI,sans-serif';c.lineWidth=1;
+ // Fine engineering grid between major ticks.
+ for(let i=0;i<=30;i++){
+  const y=T+plotH*i/30;c.strokeStyle=i%5===0?'#d5e0eb':'#edf2f7';c.lineWidth=i%5===0?1:.65;
+  c.beginPath();c.moveTo(L,y);c.lineTo(L+plotW,y);c.stroke();
+ }
+ for(let i=0;i<=30;i++){
+  const x=L+plotW*i/30;c.strokeStyle=i%5===0?'#d5e0eb':'#edf2f7';c.lineWidth=i%5===0?1:.65;
+  c.beginPath();c.moveTo(x,T);c.lineTo(x,T+plotH);c.stroke();
  }
  for(let i=0;i<=6;i++){
-  const x=L+plotW*i/6;c.beginPath();c.moveTo(x,T);c.lineTo(x,T+plotH);c.stroke();
-  c.fillStyle='#64778a';c.textAlign='center';c.fillText(nice(b.xmin+dx*i/6),x,T+plotH+19);
+  const y=T+plotH*i/6;c.fillStyle='#526a82';c.textAlign='right';c.font='11px Inter,Segoe UI,sans-serif';c.fillText(nice(b.ymax-dy*i/6),L-10,y+4);
+ }
+ for(let i=0;i<=6;i++){
+  const x=L+plotW*i/6;c.fillStyle='#526a82';c.textAlign='center';c.font='11px Inter,Segoe UI,sans-serif';c.fillText(nice(b.xmin+dx*i/6),x,T+plotH+19);
  }
  c.strokeStyle='#60758a';c.lineWidth=1.5;c.beginPath();c.moveTo(L,T);c.lineTo(L,T+plotH);c.lineTo(L+plotW,T+plotH);c.stroke();
  c.font='12px Inter,Segoe UI,sans-serif';c.fillStyle='#294965';c.textAlign='center';c.fillText(xlabel||'',L+plotW/2,h-15);
  c.save();c.translate(17,T+plotH/2);c.rotate(-Math.PI/2);c.fillText(ylabel||'',0,0);c.restore();
  c.save();c.beginPath();c.rect(L,T,plotW,plotH);c.clip();
  series.forEach((s,i)=>{
-  const color=s.color||COLORS[i%COLORS.length];c.strokeStyle=color;c.lineWidth=s.width||2.1;c.globalAlpha=s.alpha??1;
+  const color=s.color||COLORS[i%COLORS.length];c.strokeStyle=color;c.lineWidth=s.width||2.1;c.lineCap='round';c.lineJoin='round';c.globalAlpha=s.alpha??1;
   if(s.dash)c.setLineDash(s.dash);else c.setLineDash([]);
   c.beginPath();let started=false;
   for(const p of (s.data||[])){
    if(!p||!Number.isFinite(p[0])||!Number.isFinite(p[1])){started=false;continue;}
    if(!started){c.moveTo(X(p[0]),Y(p[1]));started=true;}else c.lineTo(X(p[0]),Y(p[1]));
   }
-  c.stroke();c.setLineDash([]);c.globalAlpha=1;
+  if(s.emphasis){c.save();c.shadowColor=color;c.shadowBlur=5;c.stroke();c.restore();}else c.stroke();c.setLineDash([]);c.globalAlpha=1;
   if(s.points){for(const p of s.points){if(!Number.isFinite(p[0])||!Number.isFinite(p[1]))continue;c.fillStyle=color;c.beginPath();c.arc(X(p[0]),Y(p[1]),4,0,Math.PI*2);c.fill();}}
  });
  c.restore();
