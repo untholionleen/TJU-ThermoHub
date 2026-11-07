@@ -1,11 +1,11 @@
 {
   "name": "tju-thermohub",
-  "version": "13.1.0",
+  "version": "13.1.1",
   "private": true,
   "description": "TJU Chemical Engineering Thermodynamics Self-Learning Platform",
   "scripts": {
     "test": "node tests/run-tests.js",
-    "check": "node --check assets/js/eos/eos.js && node --check assets/js/steam/region4.js && node --check assets/js/charts/draw.js && node --check assets/js/derive/derivations.js && node --check assets/js/core/app.js && node tests/run-tests.js",
+    "check": "node --check assets/js/eos/eos.js && node --check assets/js/steam/region4.js && node --check assets/js/steam/if97.js && node --check assets/vendor/if97/NeutriumJS.thermo.IAPWS97.js && node --check assets/vendor/if97/NeutriumJS.thermo.IAPWS97.PT.js && node --check assets/vendor/if97/NeutriumJS.thermo.IAPWS97.PH.js && node --check assets/vendor/if97/NeutriumJS.thermo.IAPWS97.PS.js && node --check assets/vendor/if97/NeutriumJS.thermo.IAPWS97.HS.js && node --check assets/js/charts/draw.js && node --check assets/js/derive/derivations.js && node --check assets/js/core/app.js && node tests/run-tests.js && node tests/if97-tests.js",
     "build:standalone": "python scripts/build-standalone.py"
   }
 }

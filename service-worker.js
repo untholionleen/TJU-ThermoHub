@@ -1,8 +1,14 @@
-const CACHE_NAME = 'tju-thermohub-v13.1.0';
+const CACHE_NAME = 'tju-thermohub-v13.1.1-if97';
 const CORE_ASSETS = [
   './', './index.html', './manifest.webmanifest',
   './assets/css/theme.css',
   './assets/js/eos/eos.js', './assets/js/steam/region4.js',
+  './assets/js/steam/if97.js',
+  './assets/vendor/if97/NeutriumJS.thermo.IAPWS97.js',
+  './assets/vendor/if97/NeutriumJS.thermo.IAPWS97.PT.js',
+  './assets/vendor/if97/NeutriumJS.thermo.IAPWS97.PH.js',
+  './assets/vendor/if97/NeutriumJS.thermo.IAPWS97.PS.js',
+  './assets/vendor/if97/NeutriumJS.thermo.IAPWS97.HS.js',
   './assets/js/charts/draw.js', './assets/js/derive/derivations.js',
   './assets/js/core/app.js',
   './data/chemicals/chemicals.json', './data/glossary/glossary.json'

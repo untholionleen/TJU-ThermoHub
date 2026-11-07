@@ -4,14 +4,14 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#133963">
 <meta name="description" content="天津大学化工热力学学生自主学习网站：状态方程、工程图表、公式推导、水和水蒸气性质及学术附录。">
-<title>天津大学化工热力学学生自主学习网站 | TJU-ThermoHub 13.1.0</title>
+<title>天津大学化工热力学学生自主学习网站 | TJU-ThermoHub 13.1.1</title>
 <link rel="stylesheet" href="assets/css/theme.css">
 </head>
 <body>
 <header class="site-header">
   <div class="brand-wrap">
     <div class="seal" aria-hidden="true">北洋</div>
-    <div class="brand"><div class="brand-title">天津大学化工热力学学生自主学习网站 <span class="version">13.1.0 · Nv3.1.0</span></div><div class="brand-sub">TJU Chemical Engineering Thermodynamics Self-Learning Platform</div></div>
+    <div class="brand"><div class="brand-title">天津大学化工热力学学生自主学习网站 <span class="version">13.1.1 · Nv3.1.0</span></div><div class="brand-sub">TJU Chemical Engineering Thermodynamics Self-Learning Platform</div></div>
     <button id="languageButton" class="language-button" type="button">English</button>
   </div>
   <nav class="main-nav" aria-label="主导航">
@@ -91,12 +91,75 @@
   </section>
 
   <section class="page" id="page-module4">
-    <div class="page-heading"><div><div class="eyebrow">MODULE 04</div><h1 data-i18n="m4.title">水与水蒸气性质查询</h1><p data-i18n="m4.desc">本版实现 IF97 Region 4 饱和压力关系与教学插值器；IF97 完整五区性质函数未全部移植，暂不输出 h、s、u 等物性。</p></div><span class="status status-partial" data-i18n="status.partial">部分功能已实现</span></div>
-    <div class="subnav"><button class="subnav-btn active" data-sub="saturation" data-i18n="m4.sub.sat">饱和压力/温度</button><button class="subnav-btn" data-sub="interpolation" data-i18n="m4.sub.interp">插值教学</button><button class="subnav-btn" data-sub="steamroadmap" data-i18n="m4.sub.road">五区实现状态</button></div>
-    <div class="subpage active" id="sub-saturation"><div class="two-col"><div class="panel"><h2 data-i18n="m4.satTitle">IF97 饱和曲线（Region 4）</h2><label data-i18n="m4.inputMode">查询方式</label><select id="satMode"><option value="T" data-i18n="m4.byT">按温度 T 查询饱和压力</option><option value="P" data-i18n="m4.byP">按压力 P 查询饱和温度</option></select><div class="form-grid two"><div><label id="satInputLabel">T / K</label><input id="satInput" type="number" step="any" value="373.15"></div><div class="button-row align-end"><button class="primary" id="calcSat" data-i18n="common.calculate">计算</button></div></div><div id="satResult" class="result-message" data-i18n="m4.satHelp">有效温度范围：273.15–647.096 K；有效压力范围对应三相点至临界点。</div></div><div class="panel"><h2 data-i18n="m4.boundTitle">有效范围与物理限制</h2><ul class="note-list"><li>273.15 K ≤ T ≤ 647.096 K</li><li>0.000611657 MPa（约）≤ Ps ≤ 22.064 MPa</li><li data-i18n="m4.boundNote">仅计算饱和曲线，不代表已具备 Region 1/2/3/5 全部性质计算。</li></ul><a class="quiet-link" href="https://iapws.org/technical-guidance/release/IF97-Rev" target="_blank" rel="noopener" data-i18n="m4.iapws">IAPWS-IF97 官方发布文件 →</a></div></div><div class="panel"><h2 data-i18n="m4.satCurveTitle">饱和压力曲线</h2><canvas id="satChart" class="chart-canvas" height="360"></canvas></div></div>
-    <div class="subpage" id="sub-interpolation"><div class="two-col"><div class="panel"><h2 data-i18n="interp.title">双线性插值计算器</h2><p class="field-note" data-i18n="interp.desc">输入四个网格节点和目标坐标，计算双线性插值结果；本计算器只计算用户输入的表格数据，不代表 IF97 物性查询。</p><div class="form-grid four"><div><label>x0</label><input id="ix0" type="number" value="1"></div><div><label>x1</label><input id="ix1" type="number" value="2"></div><div><label>y0</label><input id="iy0" type="number" value="300"></div><div><label>y1</label><input id="iy1" type="number" value="400"></div><div><label>f00</label><input id="if00" type="number" value="10"></div><div><label>f10</label><input id="if10" type="number" value="20"></div><div><label>f01</label><input id="if01" type="number" value="15"></div><div><label>f11</label><input id="if11" type="number" value="27"></div><div><label>x</label><input id="ix" type="number" value="1.4"></div><div><label>y</label><input id="iy" type="number" value="350"></div></div><button class="primary" id="calcInterp" data-i18n="common.calculate">计算</button></div><div class="panel"><h2 data-i18n="interp.resultTitle">插值结果与过程</h2><div id="interpResult" class="result-message">f(x,y) = —</div><div class="math-display">t = (x − x₀)/(x₁ − x₀), u = (y − y₀)/(y₁ − y₀)</div><div class="math-display">f = (1−t)(1−u)f₀₀ + t(1−u)f₁₀ + (1−t)u f₀₁ + tu f₁₁</div></div></div></div>
-    <div class="subpage" id="sub-steamroadmap"><div class="panel"><h2 data-i18n="m4.roadTitle">IF97 五区域实施状态</h2><div class="table-wrap"><table><thead><tr><th>Region</th><th data-i18n="table.area">区域</th><th data-i18n="table.status">状态</th><th data-i18n="table.next">下一步</th></tr></thead><tbody><tr><td>1</td><td data-i18n="steam.r1">压缩液体</td><td><span class="status status-pending">待移植</span></td><td>Gibbs 基本方程与导数</td></tr><tr><td>2</td><td data-i18n="steam.r2">过热蒸汽</td><td><span class="status status-pending">待移植</span></td><td>理想项 + 残余项</td></tr><tr><td>3</td><td data-i18n="steam.r3">高密度/临界附近</td><td><span class="status status-pending">待移植</span></td><td>Helmholtz 方程及密度求解</td></tr><tr><td>4</td><td data-i18n="steam.r4">饱和曲线</td><td><span class="status status-active">已实现</span></td><td>验证边界与后向方程</td></tr><tr><td>5</td><td data-i18n="steam.r5">高温蒸汽</td><td><span class="status status-pending">待移植</span></td><td>高温区域方程</td></tr></tbody></table></div><p class="field-note" data-i18n="m4.roadNote">完整 IF97 不等于只实现饱和压力方程。未完成区域不提供虚假的 h、s、u、cp、cv 数值。</p></div></div>
-  </section>
+  <div class="page-heading"><div><div class="eyebrow">MODULE 04 · IAPWS-IF97</div><h1 data-i18n="m4.title">水与水蒸气性质查询</h1><p data-i18n="m4.desc">基于 IF97 五区域方程的水与水蒸气状态计算、饱和性质、反算及工程图。</p></div><span class="status status-active" data-i18n="m4.status">五区域引擎已接入</span></div>
+  <div class="subnav">
+    <button class="subnav-btn active" data-sub="saturation" data-i18n="m4.sub.state">状态查询</button>
+    <button class="subnav-btn" data-sub="steamcharts" data-i18n="m4.sub.charts">工程图</button>
+    <button class="subnav-btn" data-sub="interpolation" data-i18n="m4.sub.interp">插值教学</button>
+    <button class="subnav-btn" data-sub="steamroadmap" data-i18n="m4.sub.road">五区状态与范围</button>
+  </div>
+  <div class="subpage active" id="sub-saturation">
+    <div class="two-col">
+      <div class="panel">
+        <h2 data-i18n="m4.queryTitle">IF97 多区域性质计算</h2>
+        <p class="field-note" data-i18n="m4.queryDesc">选择两个独立变量。系统自动识别区域，并显示适用区、单位与状态。饱和线必须额外给出干度。</p>
+        <label data-i18n="m4.pairMode">输入变量组合</label>
+        <select id="steamPairMode">
+          <option value="PT">P–T · 压力与温度</option>
+          <option value="PH">P–h · 压力与焓</option>
+          <option value="PS">P–s · 压力与熵</option>
+          <option value="HS">h–s · 焓与熵</option>
+          <option value="PX">P–x · 饱和压力与干度</option>
+          <option value="TX">T–x · 饱和温度与干度</option>
+        </select>
+        <div class="form-grid two">
+          <div><label id="steamLabelA">P / MPa</label><input id="steamInputA" type="number" step="any" value="3"></div>
+          <div><label id="steamLabelB">T / K</label><input id="steamInputB" type="number" step="any" value="300"></div>
+        </div>
+        <div class="button-row"><button class="primary" id="calcSteamPair" data-i18n="common.calculate">计算</button><button class="secondary" id="resetSteamPair" data-i18n="common.reset">重置</button><button class="secondary" id="exportSteamPair" data-i18n="common.exportCsv">导出 CSV</button></div>
+        <div id="steamPairResult" class="result-message" data-i18n="m4.queryWait">输入两个独立变量后执行计算。</div>
+      </div>
+      <div class="panel">
+        <h2 data-i18n="m4.satTitle">饱和水与水蒸气性质</h2>
+        <label data-i18n="m4.inputMode">饱和曲线查询方式</label>
+        <select id="satMode"><option value="T" data-i18n="m4.byT">按温度 T 查询饱和压力</option><option value="P" data-i18n="m4.byP">按压力 P 查询饱和温度</option></select>
+        <div class="form-grid two"><div><label id="satInputLabel">T / K</label><input id="satInput" type="number" step="any" value="373.15"></div><div class="button-row align-end"><button class="primary" id="calcSat" data-i18n="common.calculate">计算</button></div></div>
+        <div id="satResult" class="result-message" data-i18n="m4.satHelp">有效温度范围：273.15–647.096 K；有效压力范围对应三相点至临界点。</div>
+        <p class="field-note" data-i18n="m4.satNote">本查询还会给出饱和液体、饱和蒸汽的比体积、焓、内能和熵。两相混合物需通过 P–x 或 T–x 指定干度。</p>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><div><h2 data-i18n="m4.stateResultTitle">状态性质结果</h2><p data-i18n="m4.stateResultDesc">PT、PH、PS、HS 与两相质量干度查询。未支持的反算组合将明确报错，不会回退到近似公式。</p></div><span id="steamRegionTag" class="status status-model">—</span></div>
+      <div id="steamStateTable" class="result-table-wrap"><div class="result-message" data-i18n="m4.stateEmpty">尚未执行状态计算。</div></div>
+    </div>
+    <div class="panel"><h2 data-i18n="m4.satCurveTitle">IF97 饱和压力曲线</h2><canvas id="satChart" class="chart-canvas" height="360"></canvas></div>
+  </div>
+  <div class="subpage" id="sub-steamcharts">
+    <div class="panel">
+      <div class="panel-head"><div><h2 data-i18n="m4.phTitle">水与水蒸气 log p–h 图</h2><p data-i18n="m4.phDesc">饱和穹顶由 Region 4 饱和压力关系与 Region 1/2/3 物性方程生成；等压线由 IF97 PT 状态函数逐点计算。</p></div><button class="primary" id="drawSteamCharts" data-i18n="common.redraw">重新绘图</button></div>
+      <canvas id="steamPHChart" class="chart-canvas tall" height="440"></canvas>
+    </div>
+    <div class="panel">
+      <h2 data-i18n="m4.tsTitle">水与水蒸气 T–s 图</h2><p class="field-note" data-i18n="m4.tsDesc">展示饱和液线、饱和汽线、质量干度线及多组等压线。图形来自 IF97 状态计算，不是图片描摹。</p>
+      <canvas id="steamTSChart" class="chart-canvas tall" height="440"></canvas>
+    </div>
+    <div class="notice-box"><strong data-i18n="m4.chartCautionTitle">图表解释</strong><p data-i18n="m4.chartCaution">近临界区状态性质变化剧烈；网格线用于学习与工程估算。精密设计时需提高采样密度并按照所采用标准的适用范围核验。</p></div>
+  </div>
+  <div class="subpage" id="sub-interpolation">
+    <div class="two-col"><div class="panel"><h2 data-i18n="interp.title">双线性插值计算器</h2><p class="field-note" data-i18n="interp.desc">输入四个网格节点和目标坐标，计算双线性插值结果；本计算器只计算用户输入的表格数据，不代表 IF97 物性查询。</p><div class="form-grid four"><div><label>x0</label><input id="ix0" type="number" value="1"></div><div><label>x1</label><input id="ix1" type="number" value="2"></div><div><label>y0</label><input id="iy0" type="number" value="300"></div><div><label>y1</label><input id="iy1" type="number" value="400"></div><div><label>f00</label><input id="if00" type="number" value="10"></div><div><label>f10</label><input id="if10" type="number" value="20"></div><div><label>f01</label><input id="if01" type="number" value="15"></div><div><label>f11</label><input id="if11" type="number" value="27"></div><div><label>x</label><input id="ix" type="number" value="1.4"></div><div><label>y</label><input id="iy" type="number" value="350"></div></div><button class="primary" id="calcInterp" data-i18n="common.calculate">计算</button></div><div class="panel"><h2 data-i18n="interp.resultTitle">插值结果与过程</h2><div id="interpResult" class="result-message">f(x,y) = —</div><div class="math-display">t = (x − x₀)/(x₁ − x₀), u = (y − y₀)/(y₁ − y₀)</div><div class="math-display">f = (1−t)(1−u)f₀₀ + t(1−u)f₁₀ + (1−t)u f₀₁ + tu f₁₁</div></div></div>
+  </div>
+  <div class="subpage" id="sub-steamroadmap">
+    <div class="panel"><h2 data-i18n="m4.roadTitle">IF97 五区域实施状态与适用范围</h2><div class="table-wrap"><table><thead><tr><th>Region</th><th data-i18n="table.area">区域</th><th data-i18n="table.status">实施状态</th><th data-i18n="table.next">适用范围与说明</th></tr></thead><tbody>
+      <tr><td>1</td><td data-i18n="steam.r1">压缩液体</td><td><span class="status status-active" data-i18n="m4.verified">标准方程已接入并通过参考点测试</span></td><td>273.15 K–623.15 K；液体侧，压力边界随饱和线/区域界线判断。</td></tr>
+      <tr><td>2</td><td data-i18n="steam.r2">过热蒸汽</td><td><span class="status status-active" data-i18n="m4.verified">标准方程已接入并通过参考点测试</span></td><td>273.15 K–1073.15 K；区域 1/3/5 边界由 IF97 辅助方程判定。</td></tr>
+      <tr><td>3</td><td data-i18n="steam.r3">高密度/临界附近</td><td><span class="status status-active" data-i18n="m4.verified">标准方程已接入并通过参考点测试</span></td><td>623.15 K–863.15 K；含子区密度反算与后向方程。</td></tr>
+      <tr><td>4</td><td data-i18n="steam.r4">饱和曲线与两相线</td><td><span class="status status-active" data-i18n="m4.verified">标准方程已接入并通过参考点测试</span></td><td>273.15 K–647.096 K；PX/TX 干度混合规则明确给出。</td></tr>
+      <tr><td>5</td><td data-i18n="steam.r5">高温蒸汽</td><td><span class="status status-active" data-i18n="m4.verified">标准方程已接入并通过参考点测试</span></td><td>1073.15 K–2273.15 K；压力不超过 50 MPa。</td></tr>
+    </tbody></table></div>
+    <p class="field-note" data-i18n="m4.roadNote">正向 PT 计算覆盖 IF97 五区。PH/PS 后向模块当前覆盖 Region 1–3 及饱和质量干度处理；HS 后向模块覆盖其上游支持区域。Region 5 的后向 PH/PS/HS 不在本版可用范围内，须使用 PT 输入，系统会明确拒绝不支持组合。</p></div>
+    <div class="panel"><h2 data-i18n="m4.sourceTitle">方程与数据来源</h2><p data-i18n="m4.sourceDesc">IAPWS Industrial Formulation 1997 (Revised Release 2012)；NeutriumJS.thermo.IAPWS97 浏览器实现按 CC BY 4.0 引入，并保留原版权与许可证。此第三方库已标记为 deprecated，维护者建议迁移至 @neutrium/thermo.eos.iapws97；本项目使用其 IF97 方程代码作为经参考点验证的静态实现，不将其称为官方软件。</p><p><a class="quiet-link" href="https://iapws.org/technical-guidance/release/IF97-Rev" target="_blank" rel="noopener">IAPWS 官方 IF97 发布 →</a>　<a class="quiet-link" href="https://github.com/neutrium/thermo.eos.iapws97" target="_blank" rel="noopener">Neutrium 开源实现 →</a></p></div>
+  </div>
+</section>
 
   <section class="page" id="page-appendix">
     <div class="page-heading"><div><div class="eyebrow">APPENDICES</div><h1 data-i18n="app.title">附录与学术参考</h1><p data-i18n="app.desc">统一符号、术语和常数的入口。物性常数必须带来源与验证状态。</p></div><span class="status status-active" data-i18n="status.active">基础功能已实现</span></div>
@@ -106,5 +169,11 @@
   </section>
 </main>
 <footer class="site-footer"><div class="footer-grid"><div><h3>TJU-ThermoHub</h3><p data-i18n="footer.intro">天津大学化工热力学学生自主学习网站</p><p>GitHub: <a href="https://github.com/Untholionleen" target="_blank" rel="noopener">Untholionleen</a></p></div><div><h3 data-i18n="footer.academic">学术与版权</h3><p data-i18n="footer.advisor">理论指导：天津大学化工学院夏淑倩教授</p><p data-i18n="footer.owner">项目发起与版权归属：Untholionleen</p><p data-i18n="footer.tech">技术实现：项目开发维护团队</p></div><div><h3 data-i18n="footer.references">原始参考与部署</h3><p><a href="https://pjb10.user.srcf.net/thermo/" target="_blank" rel="noopener">Patrick Barrie Thermodynamics Programs</a></p><p data-i18n="footer.env">使用环境：天津大学化工学院及高校教学场景</p><p>Version 13.1.0 (Nv3.1.0)</p></div></div><div class="footer-bottom" data-i18n="footer.disclaimer">本网站用于教学与工程辅助查询。计算结果须结合模型适用范围及数据来源独立核验，不作为重大工程决策的唯一依据。</div></footer>
-<script src="assets/js/eos/eos.js"></script><script src="assets/js/steam/region4.js"></script><script src="assets/js/charts/draw.js"></script><script src="assets/js/derive/derivations.js"></script><script src="assets/js/core/app.js"></script>
+<script src="assets/js/eos/eos.js"></script><script src="assets/js/steam/region4.js"></script><script src="assets/js/charts/draw.js"></script><script src="assets/js/derive/derivations.js"></script><script src="assets/vendor/if97/NeutriumJS.thermo.IAPWS97.js"></script>
+<script src="assets/vendor/if97/NeutriumJS.thermo.IAPWS97.PT.js"></script>
+<script src="assets/vendor/if97/NeutriumJS.thermo.IAPWS97.PH.js"></script>
+<script src="assets/vendor/if97/NeutriumJS.thermo.IAPWS97.PS.js"></script>
+<script src="assets/vendor/if97/NeutriumJS.thermo.IAPWS97.HS.js"></script>
+<script src="assets/js/steam/if97.js"></script>
+<script src="assets/js/core/app.js"></script>
 </body></html>

@@ -109,7 +109,7 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f -- README.md index.html assets data tests scripts legacy package.json service-worker.js manifest.webmanifest .nojekyll CHANGELOG.md
+          git add -f -- README.md index.html assets data tests scripts legacy docs package.json service-worker.js manifest.webmanifest .nojekyll CHANGELOG.md
           if [[ -d source/runtime ]]; then
           git rm -r -f source/runtime
           fi

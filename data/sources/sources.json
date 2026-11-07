@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0.0",
+  "sources": [
+    {
+      "id": "iapws-if97",
+      "name": "IAPWS Industrial Formulation 1997",
+      "publisher": "International Association for the Properties of Water and Steam",
+      "edition": "Revised Release 2012",
+      "url": "https://iapws.org/technical-guidance/release/IF97-Rev",
+      "scope": "IF97 Regions 1–5 and Region 4 saturation",
+      "status": "implemented; reference-point regressions included"
+    },
+    {
+      "id": "neutrium-if97",
+      "name": "NeutriumJS.thermo.IAPWS97",
+      "author": "Native Dynamics",
+      "url": "https://github.com/NativeDynamics/NeutriumJS.thermo.IAPWS97",
+      "modernSuccessor": "https://github.com/neutrium/thermo.eos.iapws97",
+      "license": "CC BY 4.0",
+      "modifications": "Static browser integration, region adapter, saturation and quality wrapper, regression tests",
+      "status": "integrated; upstream legacy package deprecated"
+    },
+    {
+      "id": "pjb10",
+      "name": "JavaScript programs for solving cubic equations of state and binary VLE",
+      "author": "Patrick J. Barrie",
+      "url": "https://pjb10.user.srcf.net/thermo/",
+      "paper": "P. J. Barrie, Journal of Chemical Education 82 (2005), 958–959",
+      "license": "No explicit source redistribution license found on the referenced pages",
+      "status": "reference/attribution only; no wholesale source or database mirror"
+    },
+    {
+      "id": "textbook",
+      "name": "化工热力学（第三版）",
+      "authors": [
+        "夏淑倩",
+        "马沛生",
+        "李永红"
+      ],
+      "publisher": "化学工业出版社",
+      "year": 2023,
+      "isbn": "978-7-122-43438-8",
+      "status": "theory and terminology reference; copyrighted textbook tables are not bulk-republished"
+    }
+  ],
+  "dataPolicy": "Every engineering dataset must carry source, unit, applicability, license, validation points and revision. No placeholders or demo values are represented as measured engineering data."
+}

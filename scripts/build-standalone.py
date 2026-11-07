@@ -10,6 +10,12 @@ html = html.replace('<link rel="stylesheet" href="assets/css/theme.css">', '<sty
 for rel in [
     'assets/js/eos/eos.js', 'assets/js/steam/region4.js',
     'assets/js/charts/draw.js', 'assets/js/derive/derivations.js',
+    'assets/vendor/if97/NeutriumJS.thermo.IAPWS97.js',
+    'assets/vendor/if97/NeutriumJS.thermo.IAPWS97.PT.js',
+    'assets/vendor/if97/NeutriumJS.thermo.IAPWS97.PH.js',
+    'assets/vendor/if97/NeutriumJS.thermo.IAPWS97.PS.js',
+    'assets/vendor/if97/NeutriumJS.thermo.IAPWS97.HS.js',
+    'assets/js/steam/if97.js',
     'assets/js/core/app.js'
 ]:
     tag = f'<script src="{rel}"></script>'
@@ -28,7 +34,7 @@ if start >= 0:
 # Offline build has no service-worker scope under file://, and that is intentional.
 html = html.replace('<link rel="manifest" href="manifest.webmanifest">', '')
 html = html.replace('href="legacy/Ver10.1.0-original.html"', 'href="https://untholionleen.github.io/JsPSCES-TJU/"')
-out = ROOT / 'build' / 'TJU-ThermoHub-13.1.0-standalone.html'
+out = ROOT / 'build' / 'TJU-ThermoHub-13.1.1-standalone.html'
 out.parent.mkdir(exist_ok=True)
 out.write_text(html, encoding='utf-8')
 print(out)

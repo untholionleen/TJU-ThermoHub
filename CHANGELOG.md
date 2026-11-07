@@ -1,10 +1,16 @@
 # Changelog
 
-## 13.1.0 (Nv3.1.0) — 2026-11-07
+## 13.1.1 — IF97 five-region integration and chart refinement
 
-- 建立独立 `TJU-ThermoHub` 工程目录，避免在旧 `JsPSCES-TJU` 仓库内继续试错。
-- 按规划建立模块化 CSS、JavaScript、化学物质数据、术语表、文档、测试、脚本和旧版归档目录。
-- 配置 GitHub Pages 三阶段流水线：Verify → Build → Deploy；数值与语法测试失败会阻止部署。
-- 生产 Pages artifact 仅包含站点运行所需文件，不发布 legacy 归档和内部文档。
-- 保持 Supabase、账号、OTP 与云端运行能力关闭。
-- 明确记录尚未实现或尚未验收的模型、图表和浏览器功能，不把基线描述为完整工程数据库。
+- Added a licensed browser IF97 engine and attribution notices.
+- Added forward PT property calculations for Regions 1–5, saturation properties, quality mixing, supported PH/PS/HS inverse modes, and explicit rejection of unsupported backward states.
+- Added IF97 p-h and T-s diagrams from the equations, including saturation dome, quality lines and isobars.
+- Improved chart axes, ticks, legends, pointer inspection, isometric projections and rotatable shaded P–V–T mesh.
+- Added reference-state regressions for Regions 1, 2, 3 and 5, Region 4 saturation and inverse saturation, Region 3 saturation density, HS mixture-quality recovery and unsupported-range rejection.
+- Updated the service-worker cache and standalone builder to include the vendor engine.
+- VLE, PRG, Lee–Kesler generalized charts, air/refrigerant engineering charts and unreviewed D2–D11 remain explicitly pending.
+
+## 13.1.0 / Nv3.1.0
+
+- Established the independent static GitHub Pages application and modular source tree.
+- Implemented cubic EOS foundation, IF97 Region 4 saturation, interpolation and D1 derivation.
