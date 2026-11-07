@@ -12,8 +12,8 @@ const files=[
  'assets/js/steam/if97.js'
 ];
 for(const f of files)vm.runInContext(fs.readFileSync(f,'utf8'),ctx,{filename:f});
-const api=ctx.ThermoIF97;let passed=0;
-function test(name,fn){try{fn();console.log('PASS',name);passed++;}catch(e){console.error('FAIL',name,e.stack||e);process.exitCode=1;}}
+const api=ctx.ThermoIF97;let passed=0,total=0;
+function test(name,fn){total++;try{fn();console.log('PASS',name);passed++;}catch(e){console.error('FAIL',name,e.stack||e);process.exitCode=1;}}
 function near(a,b,t,label){assert.ok(Number.isFinite(a),label+' nonfinite');assert.ok(Math.abs(a-b)<=t,label+' mismatch '+a+' vs '+b);}
 test('Region 1 reference state P=3 MPa,T=300 K',()=>{const s=api.PT(3,300);assert.equal(s.region,1);near(s.v,.00100215168,1e-10,'v');near(s.h,115.331273,2e-6,'h');near(s.s,.392294792,2e-9,'s');near(s.cp,4.17301218,2e-7,'cp');});
 test('Region 2 reference state P=0.0035 MPa,T=300 K',()=>{const s=api.PT(.0035,300);assert.equal(s.region,2);near(s.v,39.4913866,2e-7,'v');near(s.h,2549.91145,2e-5,'h');near(s.s,8.52238967,2e-8,'s');});
@@ -33,5 +33,6 @@ test('PT rejects on saturation line without quality',()=>{assert.throws(()=>api.
 test('PH inverse recovers the R1 reference temperature',()=>{const s=api.PH(3,115.331273);near(s.t,300,0.02,'T from PH');});
 test('PS inverse recovers the R2 reference temperature',()=>{const s=api.PS(.0035,8.52238967);near(s.t,300,0.02,'T from PS');});
 test('T-s isobars reach their documented upper temperature limits',()=>{const chart=api.tsChart();const p50=chart.isobars.find(x=>x.P===50),p80=chart.isobars.find(x=>x.P===80);assert.ok(p50&&p80);near(p50.data.at(-1)[1],2273.15,1e-9,'50 MPa upper T');near(p80.data.at(-1)[1],1073.15,1e-9,'80 MPa upper T');});
-console.log('\n'+passed+' IF97 tests passed.');
-process.exitCode=passed===17?0:1;
+console.log('\n'+passed+'/'+total+' IF97 tests passed.');
+// Individual failures set exitCode=1 in test(); never compare against a hard-coded test count.
+
