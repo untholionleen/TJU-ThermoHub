@@ -20,6 +20,7 @@ function classify(P,T){
   if(Math.abs(P-ps)<Math.max(1e-9,ps*1e-8))return 4;
  }
  if(T>bounds.Region5Tmin)return 5;
+ if(T>863.15)return 2;
  if(T>623.15)return P>PT.b23_T_P(T)?3:2;
  const ps=PT.r4_T_Psat(T);
  return P>ps?1:2;
