@@ -19,3 +19,7 @@ Pushes to `main` run syntax and numerical tests, build the standalone artifact, 
 
 ## Current scope
 Static GitHub Pages; Supabase is intentionally disabled. No user accounts, email OTP, login, server runtime, or cloud database is active in this phase. This is a development baseline: features marked experimental/disabled in the project documentation must not be treated as validated engineering services.
+
+
+## Deployment status
+Runtime source transport is stored in eight ordered shards. Every push to `main` triggers source restoration, syntax/numerical verification, standalone build, and the GitHub Pages deployment workflow.
