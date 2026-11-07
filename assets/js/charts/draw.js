@@ -134,7 +134,7 @@ function drawPvt(canvas,model,Tc,Pc,w,projection,pressureFn){
  }
  let rotX=-.48,rotY=.72,zoom=1,drag=null;
  if(canvas._pvtRotation){rotX=canvas._pvtRotation.x;rotY=canvas._pvtRotation.y;zoom=canvas._pvtRotation.zoom;}
- const tCount=36,vCount=54,Ts=Array.from({length:tCount},(_,i)=>.62+i/(tCount-1)*1.55),Vs=Array.from({length:vCount},(_,i)=>.78+i/(vCount-1)*9.0);
+ const tCount=44,vCount=68,Ts=Array.from({length:tCount},(_,i)=>.62+i/(tCount-1)*1.55),Vs=Array.from({length:vCount},(_,i)=>.78+i/(vCount-1)*9.0);
  const mesh=Ts.map(tr=>Vs.map(vc=>{
   const T=tr*Tc,V=vc*8.31446261815324*Tc/(Pc*1e6);let p;
   try{p=pressureFn(model,T,V,Tc,Pc,w)/(Pc*1e6);}catch(e){p=NaN;}
@@ -151,7 +151,10 @@ function drawPvt(canvas,model,Tc,Pc,w,projection,pressureFn){
   const a=mesh[j][i],b=mesh[j][i+1],d=mesh[j+1][i],e=mesh[j+1][i+1];
   if(![a,b,d,e].every(q=>Number.isFinite(q.z)))continue;
   const poly=[project(a),project(b),project(e),project(d)],depth=poly.reduce((s,p)=>s+p.depth,0)/4,z=(a.z+b.z+d.z+e.z)/4;
-  faces.push({poly,depth,z});
+  const ux=b.x-a.x,uy=b.y-a.y,uz=b.z-a.z,vx=d.x-a.x,vy=d.y-a.y,vz=d.z-a.z;
+  const nx=uy*vz-uz*vy,ny=uz*vx-ux*vz,nz=ux*vy-uy*vx,norm=Math.hypot(nx,ny,nz)||1;
+  const light=Math.max(.42,Math.min(1,Math.abs((nx*.42+ny*.32+nz*.84)/norm)));
+  faces.push({poly,depth,z,light});
  }
  faces.sort((a,b)=>a.depth-b.depth);
  c.fillStyle='#fbfdff';c.fillRect(0,0,W,H);
@@ -160,9 +163,10 @@ function drawPvt(canvas,model,Tc,Pc,w,projection,pressureFn){
  const axisA=project({x:-1.1,y:-.78,z:-.15}),axisB=project({x:1.1,y:-.78,z:-.15}),axisC=project({x:-1.1,y:1.02,z:-.15}),axisD=project({x:-1.1,y:-.78,z:1.8});
  for(let k=0;k<=5;k++){const f=k/5;c.beginPath();let p=project({x:-1.1+2.2*f,y:-.78,z:-.15});let q=project({x:-1.1+2.2*f,y:-.78,z:1.8});c.moveTo(p.x,p.y);c.lineTo(q.x,q.y);c.stroke();p=project({x:-1.1,y:-.78,z:1.8*f/1.8});q=project({x:1.1,y:-.78,z:1.8*f/1.8});c.beginPath();c.moveTo(p.x,p.y);c.lineTo(q.x,q.y);c.stroke();}
  faces.forEach(f=>{
-  const z=Math.max(0,Math.min(1,(f.z+.2)/3.8)),r=Math.round(25+40*z),gg=Math.round(73+68*z),bb=Math.round(112+75*z),alpha=.30+z*.32;
+  const z=Math.max(0,Math.min(1,(f.z+.2)/3.8)),light=f.light||.72;
+  const r=Math.round((24+34*z)*light),gg=Math.round((68+78*z)*light),bb=Math.round((112+92*z)*light),alpha=.38+z*.30;
   c.beginPath();f.poly.forEach((p,i)=>i?c.lineTo(p.x,p.y):c.moveTo(p.x,p.y));c.closePath();
-  c.fillStyle='rgba('+r+','+gg+','+bb+','+alpha+')';c.fill();c.strokeStyle='rgba(20,56,91,.22)';c.lineWidth=.55;c.stroke();
+  c.fillStyle='rgba('+r+','+gg+','+bb+','+alpha+')';c.fill();c.strokeStyle='rgba(20,56,91,.26)';c.lineWidth=.55;c.stroke();
  });
  // Surface mesh lines.
  c.strokeStyle='rgba(16,57,96,.5)';c.lineWidth=.7;

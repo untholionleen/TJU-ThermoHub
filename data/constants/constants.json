@@ -1,0 +1,15 @@
+{
+ "edition":"夏淑倩、马沛生、李永红主编《化工热力学》第三版，附录1与附录2",
+ "publisher":"化学工业出版社","year":2023,
+ "note":"下列数值保留教材该版附录所列值，用于教材对照；不会覆盖各计算引擎源代码中声明的 SI 常数。",
+ "constants":[
+  {"symbol":"c","name_zh":"真空光速","name_en":"Speed of light in vacuum","value":299792458,"unit":"m·s⁻¹","source":"教材第三版附录1"},
+  {"symbol":"N_A","name_zh":"Avogadro 常数","name_en":"Avogadro constant","value":6.0221367e23,"unit":"mol⁻¹","source":"教材第三版附录1"},
+  {"symbol":"h","name_zh":"Planck 常数","name_en":"Planck constant","value":6.6260755e-34,"unit":"J·s","source":"教材第三版附录1"},
+  {"symbol":"k_B","name_zh":"Boltzmann 常数","name_en":"Boltzmann constant","value":1.380658e-23,"unit":"J·K⁻¹","source":"教材第三版附录1"},
+  {"symbol":"g₀","name_zh":"标准重力加速度","name_en":"Standard acceleration of gravity","value":9.80665,"unit":"m·s⁻²","source":"教材第三版附录1"},
+  {"symbol":"R","name_zh":"气体常数（教材列值）","name_en":"Gas constant (textbook-listed value)","value":8.314510,"unit":"J·mol⁻¹·K⁻¹","source":"教材第三版附录1"},
+  {"symbol":"T(K)","name_zh":"摄氏温标换算","name_en":"Celsius-to-kelvin conversion","value":273.15,"unit":"K","source":"教材第三版附录2"},
+  {"symbol":"1 atm","name_zh":"标准大气压换算","name_en":"Standard atmosphere conversion","value":101.325,"unit":"kPa","source":"教材第三版附录2"}
+ ]
+}

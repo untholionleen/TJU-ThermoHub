@@ -28,7 +28,9 @@ test('saturated liquid/vapour values are ordered',()=>{const s=api.saturationAtT
 test('quality lever rule',()=>{const s=api.saturationAtT(373.15),m=api.solve('TX',373.15,.5);near(m.h,(s.hf+s.hg)/2,1e-9,'h quality');near(m.v,(s.vf+s.vg)/2,1e-9,'v quality');});
 test('Region 3 saturation density roots at 630 K',()=>{const sat=api.saturationAtT(630);assert.equal(sat.critical,false);assert.ok(sat.liquid.rho>sat.vapor.rho);near(sat.liquid.p,sat.P,2e-6,'liquid saturation pressure');near(sat.vapor.p,sat.P,2e-6,'vapor saturation pressure');});
 test('HS backward recovers saturated mixture quality',()=>{const sat=api.saturationAtT(373.15),x=.4,h=sat.hf+x*sat.hfg,ss=sat.sf+x*sat.sfg,st=api.HS(h,ss);assert.equal(st.region,4);near(st.x,x,.002,'quality from HS');});
-test('PH/PS do not fabricate Region 5 backward results',()=>{assert.throws(()=>api.PH(.5,5219.76855));});
+test('Region 5 PH inverse recovers the 1500 K reference state',()=>{const r=api.PH(.5,5219.76855);near(r.t,1500,.002,'T from PH');near(r.h,5219.76855,2e-5,'h from PH');});
+test('Region 5 PS inverse recovers the 1500 K reference state',()=>{const r=api.PS(.5,9.65408875);near(r.t,1500,.002,'T from PS');near(r.s,9.65408875,2e-8,'s from PS');});
+test('Region 5 PH/PS reject pressure above 50 MPa',()=>{assert.throws(()=>api.PH(60,5219.76855),RangeError);assert.throws(()=>api.PS(60,9.65408875),RangeError);});
 test('PT rejects on saturation line without quality',()=>{assert.throws(()=>api.PT(.1014179779,373.15),RangeError);});
 test('PH inverse recovers the R1 reference temperature',()=>{const s=api.PH(3,115.331273);near(s.t,300,0.02,'T from PH');});
 test('PS inverse recovers the R2 reference temperature',()=>{const s=api.PS(.0035,8.52238967);near(s.t,300,0.02,'T from PS');});

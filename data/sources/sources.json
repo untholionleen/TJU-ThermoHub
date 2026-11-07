@@ -41,6 +41,24 @@
       "year": 2023,
       "isbn": "978-7-122-43438-8",
       "status": "theory and terminology reference; copyrighted textbook tables are not bulk-republished"
+    },
+    {
+      "id": "lee-kesler-plocker",
+      "name": "Lee–Kesler–Plöcker two-reference-fluid Helmholtz EOS",
+      "authors": [
+        "B. I. Lee",
+        "M. G. Kesler",
+        "J. Plöcker"
+      ],
+      "url": "https://pages.nist.gov/teqp-docs/en/latest/models/LK.html",
+      "scope": "Residual Helmholtz energy, compressibility, fugacity and departure properties",
+      "status": "independently implemented; NIST teqp example regression included; textbook figure correspondence pending"
+    },
+    {
+      "id": "binary-vle-model",
+      "name": "Peng–Robinson/SRK phi-phi binary VLE implementation",
+      "scope": "Quadratic van der Waals mixing rule, bubble/dew and isothermal flash",
+      "status": "model-based calculator; user must supply/verify kij; not an experimental VLE database"
     }
   ],
   "dataPolicy": "Every engineering dataset must carry source, unit, applicability, license, validation points and revision. No placeholders or demo values are represented as measured engineering data."

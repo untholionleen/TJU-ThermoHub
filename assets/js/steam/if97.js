@@ -103,25 +103,48 @@ function qualityState(sat,x){
   units:{p:'MPa',t:'K',v:'m³/kg',rho:'kg/m³',u:'kJ/kg',h:'kJ/kg',s:'kJ/(kg·K)',cp:'kJ/(kg·K)',cv:'kJ/(kg·K)',w:'m/s'},
   note:'Two-phase mixture properties use mass-quality mixing; cp, cv and speed of sound are not defined by this lever-rule calculation.'};
 }
-function solvePH(P,h){
- if(!finite(P)||!finite(h))throw new TypeError('P and h must be finite numbers.');
- if(P>=bounds.Pmin&&P<Pc){
-  const sat=saturationAtP(P);
-  if(h>=sat.hf&&h<=sat.hg)return qualityState(sat,(h-sat.hf)/sat.hfg);
+function inverseRegion5(P,target,key){
+  if(P>bounds.Region5Pmax)throw new RangeError('IF97 Region 5 inverse calculations are limited to P ≤ 50 MPa.');
+  const Tmin=bounds.Region5Tmin+1e-6,Tmax=bounds.Tmax;
+  const low=statePT(P,Tmin),high=statePT(P,Tmax),lo=low[key],hi=high[key];
+  if(!finite(lo)||!finite(hi)||!(hi>lo))throw new RangeError('Region 5 inverse-property bracket is invalid at this pressure.');
+  if(target<lo-1e-7*Math.max(1,Math.abs(lo))||target>hi+1e-7*Math.max(1,Math.abs(hi)))return null;
+  let left=Tmin,right=Tmax;
+  for(let i=0;i<90;i++){
+   const mid=(left+right)/2,st=statePT(P,mid),v=st[key];
+   if(!finite(v))throw new Error('Non-finite Region 5 property during inverse iteration.');
+   if(Math.abs(v-target)<1e-9*Math.max(1,Math.abs(target)))return st;
+   if(v<target)left=mid;else right=mid;
+  }
+  return statePT(P,(left+right)/2);
  }
- if(P>=bounds.Region5Pmax&&h>4000)throw new RangeError('This licensed backward PH module supports Regions 1–3 only; use PT for Region 5.');
- return stateCopy(PH.solve(P,h));
-}
-function solvePS(P,s){
- if(!finite(P)||!finite(s))throw new TypeError('P and s must be finite numbers.');
- if(P>=bounds.Pmin&&P<Pc){
-  const sat=saturationAtP(P);
-  if(s>=sat.sf&&s<=sat.sg)return qualityState(sat,(s-sat.sf)/sat.sfg);
+ function solvePH(P,h){
+  if(!finite(P)||!finite(h))throw new TypeError('P and h must be finite numbers.');
+  if(P>bounds.Region5Pmax){
+   const edge=statePT(P,bounds.Region5Tmin);
+   if(h>edge.h+1e-8*Math.max(1,Math.abs(edge.h)))throw new RangeError('Region 5 backward calculation is limited to P ≤ 50 MPa.');
+  }
+  if(P>=bounds.Pmin&&P<Pc){
+   const sat=saturationAtP(P);
+   if(h>=sat.hf&&h<=sat.hg)return qualityState(sat,(h-sat.hf)/sat.hfg);
+  }
+  if(P<=bounds.Region5Pmax){const r5=inverseRegion5(P,h,'h');if(r5)return r5;}
+  return stateCopy(PH.solve(P,h));
  }
- if(P>=bounds.Region5Pmax&&s>8)throw new RangeError('This backward PS module supports Regions 1–3 only; use PT for Region 5.');
- return stateCopy(PS.solve(P,s));
-}
-function solveHS(h,s){
+ function solvePS(P,s){
+  if(!finite(P)||!finite(s))throw new TypeError('P and s must be finite numbers.');
+  if(P>bounds.Region5Pmax){
+   const edge=statePT(P,bounds.Region5Tmin);
+   if(s>edge.s+1e-8*Math.max(1,Math.abs(edge.s)))throw new RangeError('Region 5 backward calculation is limited to P ≤ 50 MPa.');
+  }
+  if(P>=bounds.Pmin&&P<Pc){
+   const sat=saturationAtP(P);
+   if(s>=sat.sf&&s<=sat.sg)return qualityState(sat,(s-sat.sf)/sat.sfg);
+  }
+  if(P<=bounds.Region5Pmax){const r5=inverseRegion5(P,s,'s');if(r5)return r5;}
+  return stateCopy(PS.solve(P,s));
+ }
+ function solveHS(h,s){
  if(!finite(h)||!finite(s))throw new TypeError('h and s must be finite numbers.');
  // The upstream HS backward routine returns a boundary PT state in Region 4.
  // Recover the mixture quality explicitly from both h and s instead.

@@ -70,7 +70,27 @@
       </div>
     </div>
     <div class="subpage" id="sub-vle">
-      <div class="panel"><span class="status status-pending" data-i18n="status.pending">待完成与验证</span><h2 data-i18n="vle.title">二元混合物与汽液相平衡</h2><p data-i18n="vle.desc">本交付版暂不提供泡点、露点或闪蒸的数值输出。已审计发现 Ver10.1.0 与 testing_5 中混合物计算函数使用随机压力或固定模拟结果，不能作为真实 VLE 计算使用。</p><div class="notice-box"><strong data-i18n="vle.why">为什么暂时关闭？</strong><p data-i18n="vle.whyDesc">防止用户把随机数/演示值误认为真实相平衡结果。正式开放前需实现并验证 φ-φ 闪蒸、组分逸度相等、物料衡算和收敛判据，并与可靠参考数据交叉核验。</p></div><a class="quiet-link" href="legacy/Ver10.1.0-original.html" target="_blank" data-i18n="vle.legacy">查看原始 Ver10.1.0 页面（仅供审计，不建议使用其混合物计算）</a></div>
+      <div class="panel">
+        <span class="status status-partial" data-i18n="status.partial">模型计算器 · 需核实 kij</span>
+        <h2 data-i18n="vle.title">二元混合物与汽液相平衡</h2>
+        <p data-i18n="vle.desc">采用 PR/SRK φ–φ 方法与 van der Waals one-fluid 混合规则，支持二元等温等压闪蒸及泡点/露点计算。二元交互参数 kij 必须由实验或可靠文献确定；默认 0 仅为初始假设。</p>
+        <div class="form-grid four">
+          <div><label data-i18n="vle.mode">计算类型</label><select id="vleMode"><option value="flash" data-i18n="vle.flash">等温等压闪蒸</option><option value="bubbleP" data-i18n="vle.bubbleP">定温泡点压力</option><option value="dewP" data-i18n="vle.dewP">定温露点压力</option><option value="bubbleT" data-i18n="vle.bubbleT">定压泡点温度</option><option value="dewT" data-i18n="vle.dewT">定压露点温度</option></select></div>
+          <div><label data-i18n="vle.eos">状态方程</label><select id="vleModel"><option value="pr">Peng–Robinson (PR)</option><option value="srk">Soave–Redlich–Kwong (SRK)</option></select></div>
+          <div><label data-i18n="vle.comp1">组分 1</label><select id="vleComp1"></select></div>
+          <div><label data-i18n="vle.comp2">组分 2</label><select id="vleComp2"></select></div>
+        </div>
+        <div class="form-grid four">
+          <div><label data-i18n="vle.temperature">温度 / K</label><input id="vleTemperature" type="number" min="1" step="any" value="200"></div>
+          <div><label data-i18n="vle.pressure">压力 / MPa</label><input id="vlePressure" type="number" min="0.000001" step="any" value="1"></div>
+          <div><label id="vleCompLabel" data-i18n="vle.feedComp">进料组成 z₁</label><input id="vleComposition" type="number" min="0" max="1" step="any" value="0.5"></div>
+          <div><label data-i18n="vle.kij">二元交互参数 k₁₂</label><input id="vleKij" type="number" step="any" value="0"></div>
+        </div>
+        <div class="button-row"><button class="primary" id="calculateVLE" data-i18n="common.calculate">计算</button><button class="secondary" id="exportVLE" data-i18n="common.exportCsv">导出 CSV</button></div>
+        <div class="notice-box"><strong data-i18n="vle.cautionTitle">适用范围与注意事项</strong><p data-i18n="vle.caution">模型输出不是实验数据库。极性/缔合体系、接近临界区或缺少可靠 kij 时需谨慎；无根或不收敛时拒绝给出结果。</p></div>
+        <div id="vleMessage" class="result-message" data-i18n="vle.wait">输入两种物质及状态条件后计算。</div>
+        <div id="vleResults" class="table-wrap"></div>
+      </div>
     </div>
   </section>
 
@@ -80,6 +100,20 @@
       <div class="form-grid four"><div><label>Tc / K</label><input id="chartTc" type="number" value="190.56"></div><div><label>Pc / MPa</label><input id="chartPc" type="number" value="4.599"></div><div><label>ω</label><input id="chartOmega" type="number" value="0.011"></div><div><label data-i18n="m2.tr">约化温度 Tr</label><input id="chartTr" type="number" min="0.3" max="3" step="0.05" value="1.5"></div></div>
       <div class="form-grid two"><div><label data-i18n="m2.pr">查询约化压力 Pr</label><input id="chartPr" type="number" min="0.001" max="10" step="any" value="1"></div><div class="button-row align-end"><button class="primary" id="calcZ" data-i18n="common.calculate">计算</button><button class="secondary" id="exportZ" data-i18n="common.exportCsv">导出 CSV</button></div></div>
       <div id="zResult" class="result-message" data-i18n="m2.wait">计算后显示 Z 与状态。</div><canvas id="zChart" class="chart-canvas" height="380"></canvas>
+    </div>
+    <div class="panel">
+      <span class="status status-active" data-i18n="lkp.status">双参考流体方程已接入</span>
+      <h2 data-i18n="lkp.title">Lee–Kesler–Plöcker 普遍化关联</h2>
+      <p data-i18n="lkp.desc">由双参考流体 Helmholtz 剩余方程生成 Z、逸度系数、剩余焓和剩余熵曲线。此模型不是教材图表的扫描复刻，仍需逐点与教材数据对照。</p>
+      <div class="form-grid three">
+        <div><label data-i18n="lkp.tr">约化温度 Tr</label><input id="lkpTr" type="number" min="0.3" max="5" step="any" value="1.5"></div>
+        <div><label data-i18n="lkp.pr">约化压力 Pr</label><input id="lkpPr" type="number" min="0.001" max="30" step="any" value="1"></div>
+        <div><label data-i18n="lkp.omega">偏心因子 ω</label><input id="lkpOmega" type="number" step="any" value="0.011"></div>
+      </div>
+      <div class="button-row"><button class="primary" id="calculateLKP" data-i18n="common.calculate">计算</button><button class="secondary" id="exportLKP" data-i18n="common.exportCsv">导出 CSV</button></div>
+      <div id="lkpResult" class="result-message" data-i18n="lkp.wait">输入 Tr、Pr 与 ω 后计算。</div>
+      <canvas id="lkpChart" class="chart-canvas" height="390"></canvas>
+      <p class="field-note" data-i18n="lkp.source">方法参考 Lee & Kesler (1975) 与 NIST-hosted teqp LKP 文档；本项目独立实现方程并使用公开回归点核验。</p>
     </div>
     <div class="panel"><h2 data-i18n="m2.backlogTitle">工程图表接入清单</h2><div class="table-wrap"><table><thead><tr><th data-i18n="table.chart">图表</th><th data-i18n="table.method">正式实现方法</th><th data-i18n="table.status">当前状态</th></tr></thead><tbody id="chartBacklog"></tbody></table></div></div>
   </section>
@@ -164,12 +198,13 @@
   <section class="page" id="page-appendix">
     <div class="page-heading"><div><div class="eyebrow">APPENDICES</div><h1 data-i18n="app.title">附录与学术参考</h1><p data-i18n="app.desc">统一符号、术语和常数的入口。物性常数必须带来源与验证状态。</p></div><span class="status status-active" data-i18n="status.active">基础功能已实现</span></div>
     <div class="two-col"><div class="panel"><h2 data-i18n="app.glossTitle">化工热力学词汇</h2><input id="glossSearch" type="search" data-i18n-placeholder="app.search" placeholder="搜索中文或英文术语"><div id="glossary" class="glossary-list"></div></div><div class="panel"><h2 data-i18n="app.unitTitle">常用单位换算</h2><label data-i18n="app.convertType">换算类型</label><select id="unitType"><option value="pressure" data-i18n="unit.pressure">压力：MPa / bar / kPa / atm</option><option value="energy" data-i18n="unit.energy">能量：J / kJ / cal</option><option value="temperature" data-i18n="unit.temperature">温度：K / °C</option></select><div class="form-grid two"><div><label data-i18n="app.value">数值</label><input id="unitValue" type="number" value="1"></div><div><label data-i18n="app.from">从</label><select id="unitFrom"></select></div><div><label data-i18n="app.to">到</label><select id="unitTo"></select></div></div><button class="primary" id="convertUnit" data-i18n="common.calculate">换算</button><div id="unitResult" class="result-message">—</div></div></div>
+    <div class="panel"><h2 data-i18n="app.constantsTitle">教材附录基本常数</h2><p class="field-note" data-i18n="app.constantsNote">数值按已提供教材第三版附录1/2录入，仅作教材版本对照，不覆盖计算内核的 SI 常数。</p><div class="table-wrap"><table><thead><tr><th data-i18n="app.symbol">符号</th><th data-i18n="app.meaning">名称</th><th data-i18n="table.value">数值</th><th data-i18n="table.unit">单位</th><th data-i18n="table.source">来源</th></tr></thead><tbody id="constantsTable"></tbody></table></div></div>
     <div class="panel"><h2 data-i18n="app.symbolTitle">主要符号</h2><div class="table-wrap"><table><thead><tr><th>符号</th><th data-i18n="app.meaning">含义</th><th data-i18n="table.unit">SI 单位</th></tr></thead><tbody id="symbolTable"></tbody></table></div></div>
     <div class="panel"><h2 data-i18n="app.sourceTitle">数据来源与引用</h2><ul class="source-list"><li><a href="https://iapws.org/technical-guidance/release/IF97-Rev" target="_blank" rel="noopener">IAPWS R7-97(2012)：IF97 修订发布文件</a> — 水与水蒸气工业公式。</li><li><a href="https://webbook.nist.gov/chemistry/" target="_blank" rel="noopener">NIST Chemistry WebBook</a> — 物性数据核对入口。</li><li><a href="https://pjb10.user.srcf.net/thermo/" target="_blank" rel="noopener">Patrick J. Barrie 原始教学程序</a> — 原项目算法与教学结构参考，使用与再分发需遵守原权利要求。</li><li><span data-i18n="app.bookRef">夏淑倩、马沛生、李永红主编：《化工热力学》第三版，化学工业出版社，2023。已上传的附录用于核对基本常数与物性表，不整段复制受版权保护内容。</span></li></ul><p class="field-note" data-i18n="app.dataNote">临界参数表中可从教材附录3核对的物质采用教材值；氮、氧、氢、二氧化碳等以独立来源记录并待进一步复核。数据版本与来源见 data/chemicals/chemicals.json。</p></div>
   </section>
 </main>
-<footer class="site-footer"><div class="footer-grid"><div><h3>TJU-ThermoHub</h3><p data-i18n="footer.intro">天津大学化工热力学学生自主学习网站</p><p>GitHub: <a href="https://github.com/Untholionleen" target="_blank" rel="noopener">Untholionleen</a></p></div><div><h3 data-i18n="footer.academic">学术与版权</h3><p data-i18n="footer.advisor">理论指导：天津大学化工学院夏淑倩教授</p><p data-i18n="footer.owner">项目发起与版权归属：Untholionleen</p><p data-i18n="footer.tech">技术实现：项目开发维护团队</p></div><div><h3 data-i18n="footer.references">原始参考与部署</h3><p><a href="https://pjb10.user.srcf.net/thermo/" target="_blank" rel="noopener">Patrick Barrie Thermodynamics Programs</a></p><p data-i18n="footer.env">使用环境：天津大学化工学院及高校教学场景</p><p>Version 13.1.0 (Nv3.1.0)</p></div></div><div class="footer-bottom" data-i18n="footer.disclaimer">本网站用于教学与工程辅助查询。计算结果须结合模型适用范围及数据来源独立核验，不作为重大工程决策的唯一依据。</div></footer>
-<script src="assets/js/eos/eos.js"></script><script src="assets/js/steam/region4.js"></script><script src="assets/js/charts/draw.js"></script><script src="assets/js/derive/derivations.js"></script><script src="assets/vendor/if97/NeutriumJS.thermo.IAPWS97.js"></script>
+<footer class="site-footer"><div class="footer-grid"><div><h3>TJU-ThermoHub</h3><p data-i18n="footer.intro">天津大学化工热力学学生自主学习网站</p><p>GitHub: <a href="https://github.com/Untholionleen" target="_blank" rel="noopener">Untholionleen</a></p></div><div><h3 data-i18n="footer.academic">学术与版权</h3><p data-i18n="footer.advisor">理论指导：天津大学化工学院夏淑倩教授</p><p data-i18n="footer.owner">项目发起与版权归属：Untholionleen</p><p data-i18n="footer.tech">技术实现：项目开发维护团队</p></div><div><h3 data-i18n="footer.references">原始参考与部署</h3><p><a href="https://pjb10.user.srcf.net/thermo/" target="_blank" rel="noopener">Patrick Barrie Thermodynamics Programs</a></p><p data-i18n="footer.env">使用环境：天津大学化工学院及高校教学场景</p><p>Version 13.3.0 (Nv3.1.0)</p></div></div><div class="footer-bottom" data-i18n="footer.disclaimer">本网站用于教学与工程辅助查询。计算结果须结合模型适用范围及数据来源独立核验，不作为重大工程决策的唯一依据。</div></footer>
+<script src="assets/js/eos/eos.js"></script><script src="assets/js/eos/lee-kesler.js"></script><script src="assets/js/eos/vle.js"></script><script src="assets/js/steam/region4.js"></script><script src="assets/js/charts/draw.js"></script><script src="assets/js/derive/derivations.js"></script><script src="assets/vendor/if97/NeutriumJS.thermo.IAPWS97.js"></script>
 <script src="assets/vendor/if97/NeutriumJS.thermo.IAPWS97.PT.js"></script>
 <script src="assets/vendor/if97/NeutriumJS.thermo.IAPWS97.PH.js"></script>
 <script src="assets/vendor/if97/NeutriumJS.thermo.IAPWS97.PS.js"></script>

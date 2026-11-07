@@ -3,8 +3,8 @@ const fs=require('node:fs');const vm=require('node:vm');
 const ctx={window:{}};vm.createContext(ctx);
 for(const f of ['assets/js/eos/eos.js','assets/js/steam/region4.js'])vm.runInContext(fs.readFileSync(f,'utf8'),ctx);
 const E=ctx.window.ThermoEOS,S=ctx.window.ThermoSteam;
-let passed=0;
-function test(name,fn){try{fn();console.log('PASS',name);passed++;}catch(e){console.error('FAIL',name,e.message);process.exitCode=1;}}
+let passed=0,total=0;
+function test(name,fn){total++;try{fn();console.log('PASS',name);passed++;}catch(e){console.error('FAIL',name,e.message);process.exitCode=1;}}
 const finite=x=>assert.ok(Number.isFinite(x));
 test('16 chemical records exist',()=>{const d=JSON.parse(fs.readFileSync('data/chemicals/chemicals.json'));assert.equal(d.chemicals.length,16);});
 for(const model of ['vdw','rk','srk','pr'])test(model+' returns finite roots at methane test state',()=>{const r=E.calculate({model,T:250,P:2,Tc:190.56,Pc:4.599,omega:.011});assert.ok(r.rootCount>=1);r.roots.forEach(x=>{finite(x.Z);finite(x.V_m);finite(x.phi);finite(x.H_R);finite(x.S_R);assert.ok(x.Z>r.B);});});
@@ -22,4 +22,4 @@ test('cubic root solver recovers three known real roots',()=>{const r=E.cubicRoo
 test('EOS roots reconstruct the specified pressure for all four models',()=>{for(const model of ['vdw','rk','srk','pr']){const r=E.calculate({model,T:250,P:2,Tc:190.56,Pc:4.599,omega:.011});const p=E.pressure(model,250,r.vapor.V_m,190.56,4.599,.011)/1e6;assert.ok(Math.abs(p-2)<1e-7,model+' pressure reconstruction');}});
 test('IF97 saturation pressure is monotonic over sampled range',()=>{let last=0;for(let T=280;T<=640;T+=10){const p=S.pSat(T);assert.ok(p>last);last=p;}});
 
-console.log(`\n${passed} tests passed.`);process.exitCode=passed===17?0:1;
+console.log(`\n${passed}/${total} tests passed.`);
