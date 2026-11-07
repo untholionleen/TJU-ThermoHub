@@ -49,13 +49,14 @@ function flash({model='pr',T,P,feed,kij=0,maxIterations=150,tolerance=1e-9}){
  const {x,y,beta,K}=last,mat=x.map((v,i)=>(1-beta)*v+beta*y[i]),materialResidual=Math.max(...mat.map((v,i)=>Math.abs(v-z[i]))),fugacityResidual=Math.max(...K.map((k,i)=>Math.abs(Math.log(k)-Math.log(last.liquidPhi[i]/last.vaporPhi[i]))));
  return {model,T,P,phase:'two-phase',beta,x,y,K,iterations:last.iterations,converged,rrResidual:last.residual,materialResidual,fugacityResidual,liquidZ:last.liquidZ,vaporZ:last.vaporZ,liquidPhi:last.liquidPhi,vaporPhi:last.vaporPhi,feed:feed.map(c=>({...c})),source:'PR/SRK phi-phi flash; van der Waals one-fluid mixing rule; user-supplied binary kij.'};
 }
-function phaseBoundaryResidual(model,mode,T,P,fixed,feed,kij){
+function phaseBoundaryResidual(model,mode,T,P,fixed,feed,kij,requireTwoRoots=false){
  const liquidFixed=mode==='bubble'?fixed:null,vaporFixed=mode==='dew'?fixed:null,Kw=feed.map(c=>Math.exp(Math.max(-25,Math.min(25,Math.log(c.Pc/P)+5.373*(1+c.omega)*(1-c.Tc/T)))));
  let moving=mode==='bubble'?Kw.map((k,i)=>k*liquidFixed[i]):vaporFixed.map((v,i)=>v/Kw[i]);const sm=moving.reduce((a,b)=>a+b,0);moving=moving.map(v=>v/sm);
  let residual=NaN,K=[],L,V;
  for(let iter=0;iter<100;iter++){
   const x=mode==='bubble'?liquidFixed:moving,y=mode==='bubble'?moving:vaporFixed;L=phaseRoots(model,T,P,x,feed,kij);V=phaseRoots(model,T,P,y,feed,kij);
   if(!L.Z.length||!V.Z.length)throw new RangeError('No admissible liquid/vapor compressibility root at this boundary trial state.');
+  if(requireTwoRoots&&(L.Z.length<2||V.Z.length<2))throw new RangeError('Distinct liquid and vapor roots are not available at this temperature-boundary trial state.');
   const phiL=L.phi[0],phiV=V.phi[V.phi.length-1];K=phiL.map((v,i)=>v/phiV[i]);
   const raw=mode==='bubble'?K.map((k,i)=>k*liquidFixed[i]):K.map((k,i)=>vaporFixed[i]/k),sum=raw.reduce((a,b)=>a+b,0);residual=sum-1;
   const next=raw.map(v=>v/sum),err=Math.max(...next.map((v,i)=>Math.abs(v-moving[i])));moving=next;
@@ -77,11 +78,11 @@ function boundaryPressure(mode,{model='pr',T,composition,feed,kij=0}){
 function boundaryTemperature(mode,{model='pr',P,composition,feed,kij=0}){
  validateFeed(feed);validateComposition(composition);if(!finite(P)||P<=0||!['pr','srk'].includes(model))throw new RangeError('Invalid pressure or EOS model.');
  const tMin=Math.max(55,Math.min(...feed.map(c=>c.Tc))*.45),tMax=Math.max(...feed.map(c=>c.Tc))*1.2,n=100,samples=[];
- for(let i=0;i<n;i++){const T=tMin+(tMax-tMin)*i/(n-1);try{const q=phaseBoundaryResidual(model,mode,T,P,composition,feed,kij);if(finite(q.residual))samples.push({T,...q});}catch(e){}}
+ for(let i=0;i<n;i++){const T=tMin+(tMax-tMin)*i/(n-1);try{const q=phaseBoundaryResidual(model,mode,T,P,composition,feed,kij,true);if(finite(q.residual))samples.push({T,...q});}catch(e){}}
  let bracket=null;for(let i=1;i<samples.length;i++)if(samples[i-1].residual*samples[i].residual<=0){bracket=[samples[i-1],samples[i]];break;}
  if(!bracket)throw new RangeError('No bubble/dew temperature root found in the scanned two-phase temperature interval.');
- let lo=bracket[0].T,hi=bracket[1].T,fl=bracket[0].residual,q=null;for(let i=0;i<65;i++){const T=(lo+hi)/2;q=phaseBoundaryResidual(model,mode,T,P,composition,feed,kij);if(Math.abs(q.residual)<1e-9)break;if(fl*q.residual<=0)hi=T;else{lo=T;fl=q.residual;}}
- const T=(lo+hi)/2;q=phaseBoundaryResidual(model,mode,T,P,composition,feed,kij);
+ let lo=bracket[0].T,hi=bracket[1].T,fl=bracket[0].residual,q=null;for(let i=0;i<65;i++){const T=(lo+hi)/2;q=phaseBoundaryResidual(model,mode,T,P,composition,feed,kij,true);if(Math.abs(q.residual)<1e-9)break;if(fl*q.residual<=0)hi=T;else{lo=T;fl=q.residual;}}
+ const T=(lo+hi)/2;q=phaseBoundaryResidual(model,mode,T,P,composition,feed,kij,true);
  return {mode,model,T,P,x:mode==='bubble'?composition:q.composition,y:mode==='bubble'?q.composition:composition,K:q.K,iterations:q.iterations,residual:q.residual,liquidZ:q.liquidZ,vaporZ:q.vaporZ,liquidPhi:q.liquidPhi,vaporPhi:q.vaporPhi,source:model.toUpperCase()+' phi-phi bubble/dew temperature calculation; van der Waals one-fluid mixing rule; user-supplied binary kij.'};
 }
 g.ThermoVLE=Object.freeze({flash,phaseRoots,rachfordRice,bubblePressure:args=>boundaryPressure('bubble',args),dewPressure:args=>boundaryPressure('dew',args),bubbleTemperature:args=>boundaryTemperature('bubble',args),dewTemperature:args=>boundaryTemperature('dew',args)});
