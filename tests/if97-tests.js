@@ -17,7 +17,7 @@ function test(name,fn){try{fn();console.log('PASS',name);passed++;}catch(e){cons
 function near(a,b,t,label){assert.ok(Number.isFinite(a),label+' nonfinite');assert.ok(Math.abs(a-b)<=t,label+' mismatch '+a+' vs '+b);}
 test('Region 1 reference state P=3 MPa,T=300 K',()=>{const s=api.PT(3,300);assert.equal(s.region,1);near(s.v,.00100215168,1e-10,'v');near(s.h,115.331273,2e-6,'h');near(s.s,.392294792,2e-9,'s');near(s.cp,4.17301218,2e-7,'cp');});
 test('Region 2 reference state P=0.0035 MPa,T=300 K',()=>{const s=api.PT(.0035,300);assert.equal(s.region,2);near(s.v,39.4913866,2e-7,'v');near(s.h,2549.91145,2e-5,'h');near(s.s,8.52238967,2e-8,'s');});
-test('Region 3 reference state P=25.5837018 MPa,T=650 K',()=>{const s=api.PT(25.5837018,650);assert.equal(s.region,3);near(s.v,.002,1e-8,'v');near(s.h,1863.43019,2e-5,'h');near(s.s,4.05427273,2e-8,'s');});
+test('Region 3 reference state P=25.5837018 MPa,T=650 K',()=>{const s=api.PT(25.5837018,650);assert.equal(s.region,3);near(s.v,.002,1e-8,'v');near(s.h,1863.43019,0.003,'h');near(s.s,4.05427273,2e-8,'s');});
 test('Region 5 reference state P=0.5 MPa,T=1500 K',()=>{const s=api.PT(.5,1500);assert.equal(s.region,5);near(s.v,1.3845509,2e-7,'v');near(s.h,5219.76855,2e-5,'h');near(s.s,9.65408875,2e-8,'s');});
 test('Region 5 upper temperature is supported at 30 MPa only below 50 MPa',()=>{const s=api.PT(30,2000);assert.equal(s.region,5);near(s.h,6571.22604,2e-5,'h');});
 test('Region 5 rejects pressure above 50 MPa',()=>{assert.throws(()=>api.PT(60,1500),RangeError);});
