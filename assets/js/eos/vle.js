@@ -55,7 +55,7 @@ function phaseBoundaryResidual(model,mode,T,P,fixed,feed,kij){
  let residual=NaN,K=[],L,V;
  for(let iter=0;iter<100;iter++){
   const x=mode==='bubble'?liquidFixed:moving,y=mode==='bubble'?moving:vaporFixed;L=phaseRoots(model,T,P,x,feed,kij);V=phaseRoots(model,T,P,y,feed,kij);
-  if(L.Z.length<2||V.Z.length<2)throw new RangeError('Two distinct liquid/vapor roots are not available at this boundary trial state.');
+  if(!L.Z.length||!V.Z.length)throw new RangeError('No admissible liquid/vapor compressibility root at this boundary trial state.');
   const phiL=L.phi[0],phiV=V.phi[V.phi.length-1];K=phiL.map((v,i)=>v/phiV[i]);
   const raw=mode==='bubble'?K.map((k,i)=>k*liquidFixed[i]):K.map((k,i)=>vaporFixed[i]/k),sum=raw.reduce((a,b)=>a+b,0);residual=sum-1;
   const next=raw.map(v=>v/sum),err=Math.max(...next.map((v,i)=>Math.abs(v-moving[i])));moving=next;
